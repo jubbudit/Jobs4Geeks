@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Osman Balci on 2021.11.11
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!--
+ ============================================================
+    IMPORTANT NOTE:  NON-FUNCTIONING
+    Files taken from Galleria Image Slider code snippet on
+    course website. Upload the rest of the files to make it work
+ ============================================================
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <!-- CSS style definitions for p:galleria to use -->
+        <style type="text/css">
+            body .custom-indicator-galleria .ui-galleria-indicators {
+                padding: 1rem .25rem 1rem 0;
+            }
+
+            body .custom-indicator-galleria .ui-galleria-indicator {
+                width: 100%;
+                text-align: right;
+                font-weight: bold;
+                padding: .357rem .75rem .357rem .75rem;
+                margin-bottom: 0 !important;
+            }
+
+            body .custom-indicator-galleria .ui-galleria-indicator {
+                color: #e9ecef;
+                background-color: transparent;
+                cursor: pointer;
+                transition: background-color 0.2s, color 0.2s;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+
+            body .custom-indicator-galleria .ui-galleria-indicator.ui-state-highlight {
+                background-color: var(--primary-color);
+                color: var(--primary-color-text);
+            }
+        </style>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div class="card" align="center">
+                <!--
+                ========================================
+                |   PrimeFaces Galleria Image Slider   |
+                ========================================
+                (1) value="#{galleriaManager.listOfPhotos}" obtains a list of photo object references.
+                (2) var="aPhoto" is the iterator variable holding a photo object reference from the list.
+                (3) responsiveOptions defines a model of options for Responsive UI Design.
+                    It enables the slider to resize to fit on a smartphone screen.
+                (4) circular="true" loops the slide show until it is stopped.
+                (5) autoPlay="true" automatically starts the slide show.
+                (6) If the user clicks an indicator button, the slider becomes manual until
+                    the page is refreshed to be auto play again.
+                (7) transitionInterval="4000" displays next photo after 4 seconds (4000 milliseconds).
+                (8) showIndicators="true" displays the indicator buttons below each photo.
+                    Clicking an indicator button shows its corresponding photo.
+                (9) Change max-width to be the maximum width of the photos used.
+                -->
+                <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto"
+                            responsiveOptions="#{galleriaManager.responsiveOptions1}"
+                            circular="true" autoPlay="true" transitionInterval="4000"
+                            showThumbnails="false" showIndicators="true" style="max-width: 800px">
+
+                    <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+                </p:galleria>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
