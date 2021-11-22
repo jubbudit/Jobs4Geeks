@@ -39,7 +39,7 @@ This CSS file was created by http://www.menucool.com
 
 /* Caption styles */
 #slider .mc-caption {
-    position:absolute
+    position:absolute;
     width:100%;
     height:auto;
     padding:10px 0;  /* 10px will increase the height.*/

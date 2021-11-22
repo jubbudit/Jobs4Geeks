@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Conner Owens on 2021.11.4
+  - Created by Conner Owens on 2021.11.22
   - Copyright © 2021 Conner Owens. All rights reserved.
   -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -45,21 +45,9 @@ siteTemplate for the entire site, achieving great maintainability.
                 *******************************
                 -->
                 <td align="center" valign="middle">
-                    <!-- Welcome the user if signed in -->
-                    <c:if test="#{userController.isLoggedIn() == true}">
-                        <!-- Welcome the Admin if signed in -->
-                        <c:if test="#{userController.isAdmin() == true}">
-                            <span class="headerTitle">Hello, Administrator</span>
-                        </c:if>
 
-                        <c:if test="#{userController.isAdmin() == false}">
-                            <span class="headerTitle">Hello, #{userController.selected.firstName}</span>
-                        </c:if>
-                    </c:if>
+                    <span class="headerTitle">Jobs 4 Geeks Test</span>
 
-                    <c:if test="#{userController.isLoggedIn() == false}">
-                        <span class="headerTitle">Hello, Guest</span>
-                    </c:if>
                 </td>
 
                 <!--
@@ -73,39 +61,10 @@ siteTemplate for the entire site, achieving great maintainability.
                         <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="white-space: nowrap;">
                             <p:menuitem value="Home" outcome="/index" icon="fas fa-home"/>
 
-                            <!-- Menu Options IF a User is Signed In -->
-                            <c:if test="#{userController.isLoggedIn() == true}">
-                                <!-- Menu Options IF the Signed In User is NOT the Administrator -->
-                                <c:if test="#{userController.isAdmin() == false}">
-                                    <p:menuitem value="Take Survey" outcome="/userSurvey/TakeSurvey" icon="fas fa-pencil-alt"/>
-                                    <p:menuitem value="Surveys Taken" outcome="/userSurvey/SurveysTaken" icon="fas fa-check"/>
-                                </c:if>
-
-                                <!-- Menu Options IF the Signed In User IS the Administrator -->
-                                <c:if test="#{userController.isAdmin() == true}">
-                                    <!-- Todo, make these pages -->
-                                    <p:menuitem value="Generate Report" outcome="/admin/GenerateReport" icon="fas fa-file-alt"/>
-                                    <p:menuitem value="List All Surveys" outcome="/admin/AllSurveys" icon="fas fa-list"/>
-                                    <p:menuitem value="List All Users" outcome="/admin/AllUsers" icon="fas fa-list"/>
-                                </c:if>
-
-                                <p:menuitem outcome="/userAccount/Profile">
-                                    <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{userController.userPhoto()}" />
-                                    &nbsp;My Account
-                                </p:menuitem>
-                                <p:menuitem value="Sign Out" action="#{userController.logout()}" icon="fas fa-sign-out-alt" />
-                            </c:if>
-
-                            <!-- Menu Options IF No User is Signed In -->
-                            <c:if test="#{userController.isLoggedIn() == false}">
-                                <p:menuitem value="Sign In" outcome="/SignIn" icon="fas fa-sign-in-alt" />
-                                <p:menuitem value="Create Account" outcome="/userAccount/CreateAccount" icon="fas fa-user-plus" />
-                                <p:menuitem value="Take Survey" outcome="/SignIn" icon="fas fa-pencil-alt"/>
-                            </c:if>
-
                         </p:menu>
                     </div>
                 </td>
+
             </tr>
         </table>
     </h:form>

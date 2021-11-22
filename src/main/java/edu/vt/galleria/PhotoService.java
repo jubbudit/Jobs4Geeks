@@ -30,29 +30,29 @@ public class PhotoService {
     public void init() {
         listOfPhotos = new ArrayList<>();
 
-        listOfPhotos.add(new Photo("/resources/images/photos/photo1.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo1.png", "unused",
                 "Description for Photo 1", "Photo 1"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo2.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo2.png", "unused",
                 "Description for Photo 2", "Photo 2"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo3.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo3.png", "unused",
                 "Description for Photo 3", "Photo 3"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo4.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo4.png", "unused",
                 "Description for Photo 4", "Photo 4"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo5.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo5.png", "unused",
                 "Description for Photo 5", "Photo 5"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo6.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo6.png", "unused",
                 "Description for Photo 6", "Photo 6"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo7.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo7.png", "unused",
                 "Description for Photo 7", "Photo 7"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo8.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo8.png", "unused",
                 "Description for Photo 8", "Photo 8"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo9.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo9.png", "unused",
                 "Description for Photo 9", "Photo 9"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo10.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo10.png", "unused",
                 "Description for Photo 10", "Photo 10"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo11.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo11.png", "unused",
                 "Description for Photo 11", "Photo 11"));
-        listOfPhotos.add(new Photo("/resources/images/photos/photo12.jpg", "unused",
+        listOfPhotos.add(new Photo("/resources/images/photos/photo12.png", "unused",
                 "Description for Photo 12", "Photo 12"));
     }
 
