@@ -50,6 +50,7 @@ public class PhotoService {
                 "Description for Photo 9", "Photo 9"));
         listOfPhotos.add(new Photo("/resources/images/photos/photo10.png", "unused",
                 "Description for Photo 10", "Photo 10"));
+    }
 
     /*
     =============
