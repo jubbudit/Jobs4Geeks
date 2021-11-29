@@ -1,5 +1,5 @@
 /*
- * Created by Conner Owens on 2021.11.5
+ * Created by Conner Owens on 2021.11.29
  * Copyright © 2021 Conner Owens. All rights reserved.
  */
 package edu.vt.FacadeBeans;
@@ -21,7 +21,7 @@ public class CompanyUserFacade extends AbstractFacade<CompanyUser> {
     the entityManager instance with the persistence unitName identified below.
     ---------------------------------------------------------------------------------------------
      */
-    @PersistenceContext(unitName = "HealthSurvey-OwensPU")
+    @PersistenceContext(unitName = "Jobs4GeeksPU")
     private EntityManager entityManager;
 
     // Obtain the object reference of the EntityManager instance in charge of
