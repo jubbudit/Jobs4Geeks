@@ -1,12 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>Title</title>
-</head>
-<body>
+<!--
+  - Created by Conner Owens on 2021.11.29
+  - Copyright © 2021 Conner Owens. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
-</body>
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="About" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center">
+            <h1>About Jobs 4 Geeks</h1>
+            <table width="75%" border="0" cellspacing="0" cellpadding="5">
+                <tr>
+                    <td>
+                        <span style="text-align: center">In today's world, there are often far too many platforms to search through when looking for a job. Or, you get so many emails per day that it becomes impossible to keep up with. <b>Jobs 4 Geeks</b> was developed specifically with engineers in mind, to make the job search faster and more convinient for both candidates and employers. We've aggregated only the best engineering-related job postings from around the web, all in one place! Create your account today!</span>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <h1>Development Team</h1>
+            <table width="90%" border="0" cellspacing="0" cellpadding="5">
+                <tr>
+                    <td width="150px" align="center" valign="middle">
+                        <a href="https://www.hnfe.vt.edu/people/faculty/gpf/hedrick.html" target="_blank">
+                            <img src="#{resource['images:people/ValisaHedrick.png']}" class="profilePhoto" alt="Valisa Hedrick"/></a>
+                    </td>
+                    <td>
+                        <span class="heading">Valisa Hedrick</span><br/>is an Assistant Professor in the Department of Human Nutrition, Foods, and Exercise at Virginia Tech. Her research focuses on the development and translation of dietary assessment methodology for the prevention and treatment of obesity and related comorbidities. Her specific research areas are focused on the quantification and dietary analysis of sugar-sweetened beverage (SSB) intake, as well as the effects of SSB and artificially-sweetened or non-nutritive sweetener beverages on cardiovascular-related outcomes using subjective and objective dietary assessment methods within clinical-community based settings.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="150px" align="center" valign="middle">
+                        <a href="https://www.hnfe.vt.edu/people/faculty/gpf/hedrick.html" target="_blank">
+                            <img src="#{resource['images:people/AnnaFausnacht.png']}" class="profilePhoto" alt="Anna Fausnacht"/></a>
+                    </td>
+                    <td>
+                        <span class="heading">Anna Fausnacht</span><br/>is a Ph.D. student in the Department of Human Nutrition, Foods and Exercise at Virginia Tech. Her research focuses on Behavior and Community Science. Her specific research concentrates on the development of beverage consumption tools and social media-based worksite health interventions. Anna is also part of the Virginia Tech Graduate Teaching Scholar Program in the College of Agriculture and Life Sciences and hopes to pursue a future career in academia. Anna has both her undergraduate degree in Animal and Poultry Science and Masters of Public Health from Virginia Tech.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="150px" align="center" valign="middle">
+                        <a href="https://manta.cs.vt.edu/balci/" target="_blank">
+                            <img src="#{resource['images:people/OsmanBalci.png']}" class="profilePhoto" alt="Osman Balci"/></a>
+                    </td>
+                    <td>
+                        <span class="heading">Osman Balci</span><br/>is Director of Mobile/Cloud Software Engineering Lab and Professor of Computer Science (CS) at Virginia Tech. His current areas of expertise center on iOS mobile software engineering, cloud software engineering, digital game-based learning, and modeling and simulation. Dr. Balci is interested in creating solutions to complex problems by way of engineering mobile and cloud software applications. He received the Virginia Tech College of Engineering 2018 W.S. &ldquo;Pete&rdquo; White Innovation in Engineering Education Award for his creation of mobile and cloud software development courses in the CS curriculum and his hands-on &ldquo;Learning by Examples&rdquo; pedagogy.
+                    </td>
+                </tr>
+            </table>
+            <br/><br/><br/>
+        </div>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
 </html>
