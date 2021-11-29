@@ -47,13 +47,16 @@ siteTemplate for the entire site, achieving great maintainability.
                 <td align="center" valign="middle">
 
                     <!-- Welcome the candidate if signed in -->
-                    <c:if test="{}">
-
+                    <c:if test="#{candidateController.isLoggedIn() == true}">
+                        <span class="headerTitle">Welcome, #{candidateController.selected.firstName}!</span>
                     </c:if>
 
                     <!-- Welcome the company if signed in -->
 
-                    <span class="headerTitle">Welcome, Guest</span>
+                    <!-- Welcome if no one is signed in -->
+                    <c:if test="#{candidateController.isLoggedIn() == false}">
+                        <span class="headerTitle">Welcome, Guest!</span>
+                    </c:if>
 
                 </td>
 
