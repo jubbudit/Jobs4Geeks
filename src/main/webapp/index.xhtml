@@ -76,6 +76,17 @@
                     <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
                 </p:galleria>
             </div>
+
+            <br/> <br/>
+
+            <div align="center">
+                <!-- ====== Show "Sign In" if no user is logged in ====== -->
+                <!-- TODO -->
+                <p:button outcome="/CandidateAccount/CandidateSignIn" value="Sign In"
+                          icon="fas fa-sign-in-alt" styleClass="rounded-button"  />
+
+            </div>
+
         </ui:define>
     </ui:composition>
 </html>

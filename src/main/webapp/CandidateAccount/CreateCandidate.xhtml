@@ -1,12 +1,197 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>Title</title>
-</head>
-<body>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Conner Owens on 2021.11.29
+  - Copyright © 2021 Conner Owens. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-</body>
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Create Candidate Account" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <div align="center" style="width:50%; margin:0 auto;">
+
+            <h1>Create a Candidate Account</h1>
+            <h2>To create a Company account click here:</h2>
+            &nbsp;
+            <p:button outcome="/CompanyAccount/CreateCompany" value="Create Company Account"
+                      icon="fas fa-building" styleClass="ui-button-outlined" />
+            <br/> <br/>
+
+            <h:form id="CandidateAccountCreationForm">
+
+                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                    <!--
+                    ********************************
+                    *          FIRST NAME          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="First Name:" for="firstName" />
+                    <!--
+                    The required="true" attribute automatically places an asterisk *
+                    at the end of the value to indicate that the field is required.
+                    -->
+                    <p:inputText id="firstName" value="#{candidateController.firstName}" required="true" class="inputTextField"
+                                 requiredMessage="The First Name field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *           LAST NAME          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Last Name:" for="lastName" />
+                    <p:inputText id="lastName" value="#{candidateController.lastName}" required="true" class="inputTextField"
+                                 requiredMessage="The Last Name field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *       CURRENT POSITION       *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Current Occupation:" for="position" />
+                    <p:inputText id="position" value="#{candidateController.currentPosition}" required="true" class="inputTextField"
+                                 requiredMessage="The Current Occupation field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *       SECURITY QUESTION      *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Security Question:" for="securityQuestion" />
+                    <p:selectOneMenu id="securityQuestion" value="#{candidateController.securityQuestionNumber}" required="true" >
+                        <!--
+                        List of security questions is displayed for the user to select one.
+                        -->
+                        <f:selectItems value="#{candidateController.security_questions}"/>
+                    </p:selectOneMenu>
+
+                    <!--
+                    ********************************
+                    *        SECURITY ANSWER       *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Security Answer:" for="securityAnswer" />
+                    <p:inputText id="securityAnswer" value="#{candidateController.answerToSecurityQuestion}"
+                                 required="true" class="inputTextField"
+                                 requiredMessage="The Security Answer field is required.">
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *         EMAIL ADDRESS        *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Email:" for="email" />
+                    <p:inputText id="email" value="#{candidateController.email}" required="true" class="inputTextField"
+                                 requiredMessage="The Email field is required." >
+                        <f:validateLength minimum="2" />
+                        <!--
+                        Execute the "validate" method in the "EmailValidator.java"
+                        class file to validate the email address entered.
+                        -->
+                        <f:validator validatorId="emailValidator" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *       ACCOUNT USERNAME       *
+                    ********************************
+                    -->
+                    <p:outputLabel id="usernameEntry" value="Username:" for="username" >
+                        &nbsp;<i class="fas fa-question-circle" />
+                        <!--
+                        When the user mouses over the icon, a tooltip is displayed
+                        to provide context-sensitive help information to the user.
+                        -->
+                        <p:tooltip for="usernameEntry" value="Enter 6 to 32 characters with capital letter, lowercase letter, number, or special character _ . - @"
+                                   showEffect="clip" hideEffect="explode" position="top" />
+                    </p:outputLabel>
+
+                    <p:inputText id="username" value="#{candidateController.username}" required="true" class="inputTextField"
+                                 requiredMessage="The Username field is required." >
+                        <!--
+                        Execute the "validate" method in the "UsernameValidator.java"
+                        class file to validate the username entered.
+                        -->
+                        <f:validator validatorId="usernameValidator"/>
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *       ACCOUNT PASSWORD       *
+                    ********************************
+                    -->
+                    <p:outputLabel id="passwordEntry" value="Password:" for="password" >
+                        &nbsp;<i class="fas fa-question-circle" />
+                        <!--
+                        When the user mouses over the icon, a tooltip is displayed
+                        to provide context-sensitive help information to the user.
+                        -->
+                        <p:tooltip for="passwordEntry" value="Enter 8 to 32 characters with at least 1: capital letter, lowercase letter, number, and special characters above the numbers on the keyboard."
+                                   showEffect="clip" hideEffect="explode" position="top" />
+                    </p:outputLabel>
+
+                    <!--
+                    p:password changes the characters typed to bullets to hide the password as it is typed.
+                    feedback="true" displays password strength indicator.
+                    -->
+                    <p:password id="password" value="#{candidateController.password}" feedback="true"
+                                required="true" class="inputTextField" >
+                        <!--
+                        Execute the "validate" method in the "PasswordValidator.java"
+                        class file to validate the password entered.
+                        -->
+                        <f:validator validatorId="passwordValidator" />
+                    </p:password>
+
+                    <!--
+                    ********************************
+                    *       CONFIRM PASSWORD       *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Confirm Password:" for="confirmPassword" />
+                    <p:password id="confirmPassword" value="#{candidateController.confirmPassword}"
+                                required="true" class="inputTextField"/>
+                </p:panelGrid>
+                <br />
+                <!--
+                ================================
+                |        SUBMIT Button         |
+                ================================
+                -->
+                <p:commandButton id="Submit" value="Submit" icon="fas fa-arrow-up" styleClass="rounded-button"
+                                 ajax="false" action="#{candidateController.createAccount()}" />
+                &nbsp;&nbsp;
+                <!--
+                ================================
+                |        CANCEL Button         |
+                ================================
+                -->
+                <p:button outcome="/CandidateAccount/CandidateSignIn" value="Cancel" icon="fas fa-ban"  styleClass="ui-button-outlined" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
 </html>
