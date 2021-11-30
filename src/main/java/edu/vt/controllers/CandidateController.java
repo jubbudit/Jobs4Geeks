@@ -292,6 +292,51 @@ public class CandidateController implements Serializable {
     }
 
     /*
+    ***********************************************************
+    Update CandidateUser's Account and Redirect to Show the Profile Page
+    ***********************************************************
+     */
+    public String updateAccount() {
+
+        // Since we will redirect to show the Profile page, invoke preserveMessages()
+        Methods.preserveMessages();
+
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CandidateUser editUser = (CandidateUser) sessionMap.get("user");
+
+        try {
+            /*
+             Set the signed-in user's properties to the values entered by
+             the user in the EditAccountProfileForm in EditAccount.xhtml.
+             */
+            editUser.setFirstName(this.selected.getFirstName());
+            editUser.setLastName(this.selected.getLastName());
+            editUser.setCurrentPosition(this.selected.getCurrentPosition());
+            editUser.setEmail(this.selected.getEmail());
+
+            // Store the changes in the database
+            candidateUserFacade.edit(editUser);
+
+            Methods.showMessage("Information", "Success!",
+                    "CandidateUser's Account is Successfully Updated!");
+
+        } catch (EJBException ex) {
+            username = "";
+            Methods.showMessage("Fatal Error",
+                    "Something went wrong while updating user's profile!",
+                    "See: " + ex.getMessage());
+            return "";
+        }
+
+        // Account update is completed, redirect to show the Profile page.
+        return "/CandidateAccount/CandidateProfile?faces-redirect=true";
+    }
+
+    /*
     *****************************************************************
     Delete CandidateUser's Account, Logout, and Redirect to Show the Home Page
     *****************************************************************

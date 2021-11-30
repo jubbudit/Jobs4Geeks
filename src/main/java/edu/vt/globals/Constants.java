@@ -16,15 +16,17 @@ public final class Constants {
              |
              | - > CompanyPhotoStorage
              |
-             | - > UserFiles
+             | - > CandidateFileStorage
 
      */
 
     //-------------------------
     // To run locally (Windows)
     //-------------------------
-    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage";
+    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage/";
     public static final String USER_PHOTOS_URI = "http://localhost:8080/candidatephotos/";
+    public static final String USER_FILES_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage/";
+    public static final String USER_FILES_URI = "http://localhost:8080/candidatefiles/";
 
     //--------------------------------
     // To run on your AWS EC2 instance

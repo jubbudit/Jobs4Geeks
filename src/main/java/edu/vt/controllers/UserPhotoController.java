@@ -173,7 +173,7 @@ public class UserPhotoController implements Serializable {
      */
     public String redo() {
         filename = "";
-        return "/userPhoto/ChangePhoto?faces-redirect=true";
+        return "/CandidateAccount/ChangePhoto?faces-redirect=true";
     }
 
     /*
