@@ -4,7 +4,7 @@
 *******************************************************/
 
 html, body {
-    background-color: linen;
+    background-color: snow;
     margin: 0 0 0 0;    /* top right bottom left */
     width: 100%;        /* Set page width horizontally 100% */
     height: 100%;       /* Set page height vertically 100% */
@@ -25,7 +25,7 @@ h1 {
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: maroon;
+    color: midnightblue;
 }
 
 h2 {
@@ -34,7 +34,7 @@ h2 {
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: maroon;
+    color: midnightblue;
     display: inline;
 }
 
@@ -69,7 +69,7 @@ Style the div component whose unique id is "header"
 <div id="header"> in siteTemplate
 */
 #header {
-    background-color: azure;
+    background-color: lightsteelblue;
     width: 100%;
     height: 84px;
     position: absolute;
@@ -148,7 +148,7 @@ Used in Profile
     margin: 0;
     padding: 0;
     width: 180px;
-    background-color: azure;
+    background-color: lightsteelblue;
     border: 1px solid darkgray;
 
 }
@@ -207,7 +207,7 @@ Used in Profile
     white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: papayawhip !important;
+    background-color: whitesmoke !important;
 }
 
 /* Style p:panelGrid Column 2 */
@@ -216,7 +216,7 @@ Used in Profile
     white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: oldlace !important;
+    background-color: white !important;
 }
 
 /* Style heading text used in About and UserGuide */
