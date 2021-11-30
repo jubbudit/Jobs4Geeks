@@ -5,7 +5,9 @@
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.CandidateUser;
+import edu.vt.EntityBeans.UserPhoto;
 import edu.vt.FacadeBeans.CandidateUserFacade;
+import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
@@ -13,10 +15,15 @@ import edu.vt.globals.Password;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Named("candidateController")
@@ -45,6 +52,9 @@ public class CandidateController implements Serializable {
 
     @EJB
     private CandidateUserFacade candidateUserFacade;
+
+    @EJB
+    private UserPhotoFacade userPhotoFacade;
 
 
     /*
@@ -279,5 +289,223 @@ public class CandidateController implements Serializable {
          Therefore, we show the Sign In page for the new CandidateUser to sign in first.
          */
         return "/CandidateAccount/CandidateSignIn.xhtml?faces-redirect=true";
+    }
+
+    /*
+    *****************************************************************
+    Delete CandidateUser's Account, Logout, and Redirect to Show the Home Page
+    *****************************************************************
+     */
+    public void deleteAccount() {
+        Methods.preserveMessages();
+        /*
+        The database primary key of the signed-in CandidateUser object was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        int userPrimaryKey = (int) sessionMap.get("user_id");
+
+        try {
+            // Delete all of the photo files associated with the signed-in user whose primary key is userPrimaryKey
+            deleteAllUserPhotos(userPrimaryKey);
+
+            // Delete the CandidateUser entity, whose primary key is user_id, from the database
+            candidateUserFacade.deleteUser(userPrimaryKey);
+
+            Methods.showMessage("Information", "Success!",
+                    "Your Account is Successfully Deleted!");
+
+        } catch (EJBException ex) {
+            username = "";
+            Methods.showMessage("Fatal Error",
+                    "Something went wrong while deleting user's account!",
+                    "See: " + ex.getMessage());
+            return;
+        }
+
+        // Execute the logout() method given below
+        logout();
+    }
+
+    /*
+    **********************************************
+    Logout CandidateUser and Redirect to Show the Home Page
+    **********************************************
+     */
+    public void logout() {
+
+        // Clear the signed-in CandidateUser's session map
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        sessionMap.clear();
+
+        // Reset the signed-in CandidateUser's properties
+        username = password = confirmPassword = "";
+        firstName = lastName = currentPosition = "";
+        securityQuestionNumber = 0;
+        answerToSecurityQuestion = email = "";
+        selected = null;
+
+        // Since we will redirect to show the home page, invoke preserveMessages()
+        Methods.preserveMessages();
+
+        try {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
+            // Invalidate the signed-in CandidateUser's session
+            externalContext.invalidateSession();
+
+            /*
+            getRequestContextPath() returns the URI of the Web Pages directory of the application.
+            Obtain the URI of the index (home) page to redirect to.
+             */
+            String redirectPageURI = externalContext.getRequestContextPath() + "/index.xhtml";
+
+            // Redirect to show the index (home) page
+            externalContext.redirect(redirectPageURI);
+
+            /*
+            NOTE: We cannot use: return "/index?faces-redirect=true";
+            here because the user's session is invalidated.
+             */
+        } catch (IOException ex) {
+            Methods.showMessage("Fatal Error",
+                    "Unable to redirect to the index (home) page!",
+                    "See: " + ex.getMessage());
+        }
+    }
+
+    /*
+    ****************************************
+    Return the Security Question Selected by
+    the CandidateUser at the Time of Account Creation
+    ****************************************
+     */
+    public String getSelectedSecurityQuestion() {
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CandidateUser signedInUser = (CandidateUser) sessionMap.get("user");
+
+        // Obtain the number of the security question selected by the user
+        int questionNumber = signedInUser.getSecurityQuestionNumber();
+
+        // Return the security question corresponding to the question number
+        return Constants.QUESTIONS[questionNumber];
+    }
+
+    /*
+    *********************************************
+    Process Submitted Answer to Security Question
+    *********************************************
+     */
+    public void securityAnswerSubmit() {
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CandidateUser signedInUser = (CandidateUser) sessionMap.get("user");
+
+        String actualSecurityAnswer = signedInUser.getSecurityAnswer();
+
+        // getAnswerToSecurityQuestion() is the Getter method for the property 'answerToSecurityQuestion'
+        String enteredSecurityAnswer = getAnswerToSecurityQuestion();
+
+        if (actualSecurityAnswer.equals(enteredSecurityAnswer)) {
+            // Answer to the security question is correct; Delete the user's account.
+            // deleteAccount() method is given below.
+            deleteAccount();
+        } else {
+            Methods.showMessage("Error",
+                    "Answer to the Security Question is Incorrect!", "");
+        }
+    }
+
+    /*
+    *********************************************************
+    Return Signed-In CandidateUser's Thumbnail Photo Relative Filepath
+    *********************************************************
+     */
+    public String userPhoto() {
+
+        /*
+        The database primary key of the signed-in CandidateUser object was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Integer primaryKey = (Integer) sessionMap.get("user_id");
+
+        List<UserPhoto> photoList = userPhotoFacade.findPhotosByUserPrimaryKey(primaryKey);
+
+        if (photoList.isEmpty()) {
+            // No user photo exists. Return defaultUserPhoto.png from the BevqPhotoStorage directory.
+            return Constants.USER_PHOTOS_URI + "defaultUserPhoto.png";
+        }
+
+        /*
+        photoList.get(0) returns the object reference of the first Photo object in the list.
+        getThumbnailFileName() message is sent to that Photo object to retrieve its
+        thumbnail image file name, e.g., 5_thumbnail.jpeg
+         */
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        return Constants.USER_PHOTOS_URI + thumbnailFileName;
+    }
+
+    /*
+    *********************************************************
+    Delete the photo and thumbnail image files that belong to
+    the CandidateUser object whose database primary key is primaryKey
+    *********************************************************
+     */
+    public void deleteAllUserPhotos(int primaryKey) {
+
+        /*
+        Obtain the list of Photo objects that belong to the CandidateUser whose
+        database primary key is userId.
+         */
+        List<UserPhoto> photoList = userPhotoFacade.findPhotosByUserPrimaryKey(primaryKey);
+
+        // photoList.isEmpty implies that the user has never uploaded a photo file
+        if (!photoList.isEmpty()) {
+
+            // Obtain the object reference of the first Photo object in the list.
+            UserPhoto photo = photoList.get(0);
+            try {
+                /*
+                NOTE: Files and Paths are imported as
+                        import java.nio.file.Files;
+                        import java.nio.file.Paths;
+
+                 Delete the user's photo if it exists.
+                 getFilePath() is given in UserPhoto.java file.
+                 */
+                Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));
+
+                /*
+                 Delete the user's thumbnail image if it exists.
+                 getThumbnailFilePath() is given in UserPhoto.java file.
+                 */
+                Files.deleteIfExists(Paths.get(photo.getThumbnailFilePath()));
+
+                // Delete the photo file record from the database.
+                // UserPhotoFacade inherits the remove() method from AbstractFacade.
+                userPhotoFacade.remove(photo);
+
+                /*
+                 Delete the user's captured photo file if it exists.
+                 The file is named "user's primary key_tempFile".
+                 */
+                String capturedPhotoFilepath = Constants.USER_PHOTOS_ABSOLUTE_PATH + primaryKey + "_tempFile";
+                Files.deleteIfExists(Paths.get(capturedPhotoFilepath));
+
+            } catch (IOException ex) {
+                Methods.showMessage("Fatal Error",
+                        "Something went wrong while deleting user's photo!",
+                        "See: " + ex.getMessage());
+            }
+        }
     }
 }

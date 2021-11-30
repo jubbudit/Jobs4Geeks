@@ -74,11 +74,33 @@ siteTemplate for the entire site, achieving great maintainability.
                     <div style="padding-right:10px">
                         <p:commandButton id="dynaButton" value="Menu" type="button" icon="pi pi-bars"/>
                         <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="white-space: nowrap;">
-                            <!-- Menu Options if there is NO user signed in -->
                             <p:menuitem value="Home" outcome="/index" icon="fas fa-home"/>
-                            <p:menuitem value="Sign In" outcome="/CandidateAccount/CandidateSignIn" icon="fas fa-sign-in-alt" />
-                            <p:menuitem value="About" outcome="/About" icon="fas fa-info-circle"/>
 
+                            <!-- Menu Options if there is NO user signed in -->
+                            <c:if test="#{candidateController.isLoggedIn() == false}">
+                                <c:if test="#{companyController.isLoggedIn() == false}">
+                                    <p:menuitem value="Sign In" outcome="/CandidateAccount/CandidateSignIn" icon="fas fa-sign-in-alt" />
+
+                                </c:if>
+                            </c:if>
+
+                            <!-- Menu Options if there is a CANDIDATE signed in -->
+                            <c:if test="#{candidateController.isLoggedIn() == true}">
+                                <p:menuitem outcome="/CandidateAccount/CandidateProfile">
+                                    <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{candidateController.userPhoto()}" />
+                                    &nbsp;My Account
+                                </p:menuitem>
+                                <p:menuitem value="Sign Out" action="#{candidateController.logout()}" icon="fas fa-sign-out-alt" />
+                            </c:if>
+
+                            <!-- Menu Options if there is a COMPANY signed in -->
+                            <c:if test="#{companyController.isLoggedIn() == true}">
+
+                                <p:menuitem value="Sign Out" action="#{companyController.logout()}" icon="fas fa-sign-out-alt" />
+                            </c:if>
+
+
+                            <p:menuitem value="About" outcome="/About" icon="fas fa-info-circle"/>
                         </p:menu>
                     </div>
                 </td>

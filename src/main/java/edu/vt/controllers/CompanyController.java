@@ -13,8 +13,10 @@ import edu.vt.globals.Password;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -267,5 +269,52 @@ public class CompanyController implements Serializable {
          Therefore, we show the Sign In page for the new CompanyUser to sign in first.
          */
         return "/CompanyAccount/CompanySignIn.xhtml?faces-redirect=true";
+    }
+
+    /*
+    **********************************************
+    Logout User and Redirect to Show the Home Page
+    **********************************************
+     */
+    public void logout() {
+
+        // Clear the signed-in User's session map
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        sessionMap.clear();
+
+        // Reset the signed-in User's properties
+        username = password = confirmPassword = "";
+        name = description = "";
+        securityQuestionNumber = 0;
+        answerToSecurityQuestion = homeURL = "";
+        selected = null;
+
+        // Since we will redirect to show the home page, invoke preserveMessages()
+        Methods.preserveMessages();
+
+        try {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
+            // Invalidate the signed-in User's session
+            externalContext.invalidateSession();
+
+            /*
+            getRequestContextPath() returns the URI of the Web Pages directory of the application.
+            Obtain the URI of the index (home) page to redirect to.
+             */
+            String redirectPageURI = externalContext.getRequestContextPath() + "/index.xhtml";
+
+            // Redirect to show the index (home) page
+            externalContext.redirect(redirectPageURI);
+
+            /*
+            NOTE: We cannot use: return "/index?faces-redirect=true";
+            here because the user's session is invalidated.
+             */
+        } catch (IOException ex) {
+            Methods.showMessage("Fatal Error",
+                    "Unable to redirect to the index (home) page!",
+                    "See: " + ex.getMessage());
+        }
     }
 }

@@ -6,6 +6,32 @@ package edu.vt.globals;
 
 public final class Constants {
 
+    /* FILE STRUCTURE
+
+       DocRoot
+       |
+       | - > Jobs4GeeksStorage
+             |
+             | - > CandidatePhotoStorage
+             |
+             | - > CompanyPhotoStorage
+             |
+             | - > UserFiles
+
+     */
+
+    //-------------------------
+    // To run locally (Windows)
+    //-------------------------
+    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage";
+    public static final String USER_PHOTOS_URI = "http://localhost:8080/candidatephotos/";
+
+    //--------------------------------
+    // To run on your AWS EC2 instance
+    //--------------------------------
+//    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/SurveyUserPhotoStorage/";
+//    public static final String PHOTOS_URI = "http://54.84.71.63:8080/userphotos/";
+
     /*
      A security question is selected and answered by the user at the time of account creation.
      The selected question/answer is used as a second level of authentication for
@@ -23,4 +49,6 @@ public final class Constants {
             "What is your mother's maiden name?",
             "What was your favorite place to visit as a child?"
     };
+
+    public static final Integer THUMBNAIL_SIZE = 200;
 }
