@@ -24,6 +24,8 @@
             <h:form id="UserFileListForm">
                 <p:panel header="#{candidateController.selected.firstName}&nbsp;#{candidateController.selected.lastName}'s Files" >
 
+                    <h2>Files you upload can be viewed by companies directly from your profile!</h2><br/><br/>
+
                     <p:dataTable id="datalist"
                                  value="#{userFileController.listOfUserFiles}"
                                  var="aUserFile"
@@ -32,11 +34,10 @@
                                  selection="#{userFileController.selected}"
                                  reflow="true"
                                  showGridlines="false"
-                                 paginator="true"
+                                 paginator="false"
                                  rowKey="#{aUserFile.id}"
                                  rows="5"
                                  rowIndexVar="rowNumber"
-                                 rowsPerPageTemplate="5,10,20,30,40,50"
                                  first="#{userFileController.selectedRowNumber}" >
 
                         <p:ajax event="rowSelect" update="uploadButton deleteButton displayButton">
@@ -67,7 +68,7 @@
                         *        FILE ID column        *
                         ********************************
                         -->
-                        <p:column sortBy="#{aUserFile.id}" headerText="File Id" style="width:100px;">
+                        <p:column sortBy="#{aUserFile.id}" headerText="File Id" style="width:150px; text-align: center">
                             <div align="center"><h:outputText value="#{aUserFile.id}"/></div>
                         </p:column>
 
@@ -86,7 +87,7 @@
                         *       USER PHOTO column      *
                         ********************************
                         -->
-                        <p:column headerText="User Photo" style="width:150px;">
+                        <p:column headerText="User Photo" style="width:200px; text-align: center">
                             <div align="center">
                                 <h:graphicImage class="smallProfilePhoto" value="#{candidateController.userPhoto()}" />
                             </div>

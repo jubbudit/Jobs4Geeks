@@ -318,48 +318,6 @@ public class FileController implements Serializable {
     }
 
     /*
-    =======================================
-    Return Image or Icon based on File Type
-    =======================================
-    fileId is the database primary key value for a user file
-    Return image if it is an image file; otherwise, return file type icon
-
-    Any type of file can be uploaded or downloaded.
-    We identify the types of files that can be displayed or played in the web browser.
-    */
-    public String fileTypeIcon(Integer fileId) {
-
-        // Obtain the object reference of the UserFile whose primary key = fileId
-        UserFile userFile = userFileFacade.getUserFile(fileId);
-
-        // Obtain the userFile's filename as it is stored in the CloudDrive DB database
-        String imageFileName = userFile.getFilename();
-
-        // Extract the file extension from the filename
-        String fileExtension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
-
-        // Convert file extension to uppercase
-        String fileExtensionInCaps = fileExtension.toUpperCase();
-
-        switch (fileExtensionInCaps) {
-            case "JPG":
-            case "JPEG":
-            case "PNG":
-            case "GIF":
-                // If it is an image file, return the image file URI
-                return Constants.USER_FILES_URI + imageFileName;
-            case "MP4":
-            case "OGG":
-            case "WEBM":
-                // If it is a video file, return the videoFile icon
-                return "/resources/images/videoFile.png";
-            default:
-                // If it is another file type, return the viewFile icon
-                return "/resources/images/viewFile.png";
-        }
-    }
-
-    /*
     =====================================
     Return Cleaned Filename given File Id
     =====================================

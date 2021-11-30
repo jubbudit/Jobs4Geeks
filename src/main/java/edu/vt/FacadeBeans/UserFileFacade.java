@@ -59,7 +59,7 @@ public class UserFileFacade extends AbstractFacade<UserFile> {
 
         The following statement obtains the results from the named database query.
          */
-        return entityManager.createNamedQuery("UserFile.findUserFilesByUserId")
+        return entityManager.createNamedQuery("UserFile.findByUserId")
                 .setParameter("userId", primaryKey)
                 .getResultList();
     }
