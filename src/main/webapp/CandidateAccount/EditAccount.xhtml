@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Conner Owens on 2021.11.29
+  - Copyright © 2021 Conner Owens. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Create Account" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <div align="center" style="width:50%; margin:0 auto;">
+
+            <h1>Edit Account Profile</h1>
+
+            <h:form id="CandidateAccountCreationForm">
+
+                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                    <!--
+                    ********************************
+                    *          FIRST NAME          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="First Name:" for="firstName" />
+                    <!--
+                    The required="true" attribute automatically places an asterisk *
+                    at the end of the value to indicate that the field is required.
+                    -->
+                    <p:inputText id="firstName" value="#{candidateController.selected.firstName}" required="true" class="inputTextField"
+                                 requiredMessage="The First Name field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *           LAST NAME          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Last Name:" for="lastName" />
+                    <p:inputText id="lastName" value="#{candidateController.selected.lastName}" required="true" class="inputTextField"
+                                 requiredMessage="The Last Name field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *       CURRENT POSITION       *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Current Occupation:" for="position" />
+                    <p:inputText id="position" value="#{candidateController.selected.currentPosition}" required="true" class="inputTextField"
+                                 requiredMessage="The Current Occupation field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *         EMAIL ADDRESS        *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Email:" for="email" />
+                    <p:inputText id="email" value="#{candidateController.selected.email}" required="true" class="inputTextField"
+                                 requiredMessage="The Email field is required." >
+                        <f:validateLength minimum="2" />
+                        <!--
+                        Execute the "validate" method in the "EmailValidator.java"
+                        class file to validate the email address entered.
+                        -->
+                        <f:validator validatorId="emailValidator" />
+                    </p:inputText>
+
+                </p:panelGrid>
+                <br />
+                <!--
+                ================================
+                |        SUBMIT Button         |
+                ================================
+                -->
+                <p:commandButton id="Submit" value="Submit" icon="fas fa-arrow-up" styleClass="rounded-button"
+                                 ajax="false" action="#{candidateController.updateAccount()}" />
+                &nbsp;&nbsp;
+                <!--
+                ================================
+                |        CANCEL Button         |
+                ================================
+                -->
+                <p:button outcome="/CandidateAccount/CandidateProfile" value="Cancel" icon="fas fa-ban"  styleClass="ui-button-outlined" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

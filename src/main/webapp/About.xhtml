@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Conner Owens on 2021.11.29
+  - Copyright © 2021 Conner Owens. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="About" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center">
+            <h1>About Jobs 4 Geeks</h1>
+            <table width="85%" border="0" cellspacing="0" cellpadding="5">
+                <tr>
+                    <td>
+                        In today's world, there are often far too many platforms to search through when looking for a job. Or, you get so many emails per day that it becomes impossible to keep up with. <b>Jobs 4 Geeks</b> was developed specifically with engineers in mind, to make the job search faster and more convinient for both candidates and employers. We've aggregated only the best engineering-related job postings from around the web, all in one place! Create your account today!
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <h1>Development Team</h1>
+            <table width="70%" border="0" cellspacing="0" cellpadding="5">
+                <!-- Student 1 -->
+                <tr>
+                    <td width="150px" align="center" valign="middle">
+                        <img src="#{resource['images:people/ConnerOwens.png']}" class="profilePhoto" alt="Conner Owens"/>
+                    </td>
+                    <td>
+                        <span class="heading">Conner Owens</span><br/>is a senior at the Virginia Tech College of Engineering. He is studying Mechanical Engineering with a minor in Computer Science. For the year-long senior design project he is leading a team to build an ocean wave-powered autonomous boat. After graduation, he is hoping to find a job as a consultant or a project manager.
+                    </td>
+                </tr>
+                <!-- Student 2 -->
+                <tr>
+                    <td width="150px" align="center" valign="middle">
+                        <img src="#{resource['images:people/LukeJanoschka.jpg']}" class="profilePhoto" alt="Luke Janoschka"/>
+                    </td>
+                    <td>
+                        <span class="heading">Luke Janoschka</span><br/>is in his senior year at Virginia Tech studying Computational Modeling and Data Analytics (CMDA) with minors in Computer Science and Economics. He plans on continuing to study statistics and data science as a graduate student. In his free time, Luke enjoys playing the guitar and listening to a lot of music.
+                    </td>
+                </tr>
+                <!-- Student Placeholder -->
+                <tr>
+                    <td width="150px" align="center" valign="middle">
+                            <img src="#{resource['images:people/Elmo.png']}" class="profilePhoto" alt="Elmo"/>
+                    </td>
+                    <td>
+                        <span class="heading">Your Name Here</span><br/>is
+                    </td>
+                </tr>
+
+                <!-- TODO, ADD YOUR NAME DOWN HERE -->
+
+            </table>
+            <br/><br/><br/>
+        </div>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

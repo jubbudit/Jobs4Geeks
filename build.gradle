@@ -20,9 +20,9 @@ dependencies {
     // Java EE 8 dependency
     compileOnly group: 'javax', name: 'javaee-api', version: '8.0.1'
 
-    // primefaces-10.0.6.jar is located in the flat filesystem directory defined above
-    // primefaces-10.0.6.jar provides UI components for JSF
-    compileOnly group: 'org.primefaces', name: 'primefaces', version: '10.0.6'
+    // primefaces-11.0.0-RC1.jar is located in the flat filesystem directory defined above
+    // primefaces-11.0.0-RC1.jar provides UI components for JSF
+    compileOnly group: 'org.primefaces', name: 'primefaces', version: '11.0.0-RC1'
 
     // imgscalr-lib-4.2.jar is a simple and efficient best practice image-scaling and manipulation library implemented in pure Java
     // imgscalr-lib-4.2.jar is located in the flat filesystem directory defined above
