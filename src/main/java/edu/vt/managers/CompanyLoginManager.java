@@ -4,8 +4,8 @@
  */
 package edu.vt.managers;
 
-import edu.vt.EntityBeans.CandidateUser;
-import edu.vt.FacadeBeans.CandidateUserFacade;
+import edu.vt.EntityBeans.CompanyUser;
+import edu.vt.FacadeBeans.CompanyUserFacade;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
 
@@ -16,10 +16,10 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Map;
 
-@Named("candidateLoginManager")
+@Named("companyLoginManager")
 @SessionScoped
 
-public class CandidateLoginManager implements Serializable {
+public class CompanyLoginManager implements Serializable {
     /*
     ===============================
     Instance Variables (Properties)
@@ -33,7 +33,7 @@ public class CandidateLoginManager implements Serializable {
     UserFacade bean into the instance variable 'userFacade' after it is instantiated at runtime.
      */
     @EJB
-    private CandidateUserFacade candidateUserFacade;
+    private CompanyUserFacade companyUserFacade;
 
     /*
     =========================
@@ -64,7 +64,7 @@ public class CandidateLoginManager implements Serializable {
 
     /*
     *****************************************************
-    Sign in the CandidateUser if the Entered Username and Password
+    Sign in the CompanyUser if the Entered Username and Password
     are Valid and Redirect to Show the Profile Page
     *****************************************************
      */
@@ -75,8 +75,8 @@ public class CandidateLoginManager implements Serializable {
 
         String enteredUsername = username;
 
-        // Obtain the object reference of the CandidateUser object from the entered username
-        CandidateUser user = candidateUserFacade.findByUsername(enteredUsername);
+        // Obtain the object reference of the CompanyUser object from the entered username
+        CompanyUser user = companyUserFacade.findByUsername(enteredUsername);
 
         if (user == null) {
             Methods.showMessage("Fatal Error", "Unknown Username!",
@@ -121,13 +121,13 @@ public class CandidateLoginManager implements Serializable {
                 return "";
             }
 
-            // Verification Successful: Entered password = CandidateUser's actual password
+            // Verification Successful: Entered password = CompanyUser's actual password
 
             // Initialize the session map with user properties of interest in the method below
             initializeSessionMap(user);
 
             // Redirect to show the Profile page
-            return "/CandidateAccount/CandidateProfile?faces-redirect=true";
+            return "/CompanyAccount/CompanyProfile?faces-redirect=true";
         }
     }
 
@@ -136,21 +136,18 @@ public class CandidateLoginManager implements Serializable {
     Initialize the Session Map to Hold Session Attributes of Interests
     ******************************************************************
      */
-    public void initializeSessionMap(CandidateUser user) {
+    public void initializeSessionMap(CompanyUser user) {
 
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 
         // Store the type of signed-in user
-        sessionMap.put("type", "candidate");
+        sessionMap.put("type", "company");
 
         // Store the object reference of the signed-in user
         sessionMap.put("user", user);
 
-        // Store the First Name of the signed-in user
-        sessionMap.put("first_name", user.getFirstName());
-
-        // Store the Last Name of the signed-in user
-        sessionMap.put("last_name", user.getLastName());
+        // Store the Name of the signed-in user
+        sessionMap.put("name", user.getName());
 
         // Store the Username of the signed-in user
         sessionMap.put("username", username);

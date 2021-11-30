@@ -52,10 +52,15 @@ siteTemplate for the entire site, achieving great maintainability.
                     </c:if>
 
                     <!-- Welcome the company if signed in -->
+                    <c:if test="#{companyController.isLoggedIn() == true}">
+                        <span class="headerTitle">Welcome, #{companyController.selected.name}!</span>
+                    </c:if>
 
                     <!-- Welcome if no one is signed in -->
                     <c:if test="#{candidateController.isLoggedIn() == false}">
-                        <span class="headerTitle">Welcome, Guest!</span>
+                        <c:if test="#{companyController.isLoggedIn() == false}">
+                            <span class="headerTitle">Welcome, Guest!</span>
+                        </c:if>
                     </c:if>
 
                 </td>

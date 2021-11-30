@@ -4,8 +4,8 @@
  */
 package edu.vt.controllers;
 
-import edu.vt.EntityBeans.CandidateUser;
-import edu.vt.FacadeBeans.CandidateUserFacade;
+import edu.vt.EntityBeans.CompanyUser;
+import edu.vt.FacadeBeans.CompanyUserFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
@@ -19,9 +19,9 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Named("candidateController")
+@Named("companyController")
 @SessionScoped
-public class CandidateController implements Serializable {
+public class CompanyController implements Serializable {
     /*
     ===============================
     Instance Variables (Properties)
@@ -31,20 +31,19 @@ public class CandidateController implements Serializable {
     private String password;
     private String confirmPassword;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String currentPosition;
+    private String name;
+    private String homeURL;
+    private String description;
 
     private int securityQuestionNumber;
     private String answerToSecurityQuestion;
 
     private Map<String, Object> security_questions;
 
-    private CandidateUser selected;
+    private CompanyUser selected;
 
     @EJB
-    private CandidateUserFacade candidateUserFacade;
+    private CompanyUserFacade companyUserFacade;
 
 
     /*
@@ -75,38 +74,6 @@ public class CandidateController implements Serializable {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void setCurrentPosition(String currentPosition) {
-        this.currentPosition = currentPosition;
     }
 
     public int getSecurityQuestionNumber() {
@@ -147,21 +114,43 @@ public class CandidateController implements Serializable {
         this.security_questions = security_questions;
     }
 
-    public CandidateUser getSelected() {
+    public CompanyUser getSelected() {
         if (selected == null) {
-            // Store the object reference of the signed-in CandidateUser into the instance variable selected.
+            // Store the object reference of the signed-in CompanyUser into the instance variable selected.
             Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            selected = (CandidateUser) sessionMap.get("user");
+            selected = (CompanyUser) sessionMap.get("user");
         }
-        // Return the object reference of the selected (i.e., signed-in) CandidateUser object
+        // Return the object reference of the selected (i.e., signed-in) CompanyUser object
         return selected;
     }
 
-    public void setSelected(CandidateUser selected) {
+    public void setSelected(CompanyUser selected) {
         this.selected = selected;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getHomeURL() {
+        return homeURL;
+    }
+
+    public void setHomeURL(String homeURL) {
+        this.homeURL = homeURL;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     /*
     ================
     Instance Methods
@@ -170,7 +159,7 @@ public class CandidateController implements Serializable {
 
     /*
     **********************************
-    Return True if a CandidateUser is Signed In
+    Return True if a CompanyUser is Signed In
     **********************************
      */
     public boolean isLoggedIn() {
@@ -180,12 +169,12 @@ public class CandidateController implements Serializable {
         If there is a username, that means, there is a signed-in user.
          */
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        return (sessionMap.get("username") != null && sessionMap.get("type").equals("candidate"));
+        return (sessionMap.get("username") != null && sessionMap.get("type").equals("company"));
     }
 
     /*
     *******************************************************************
-    Create CandidateUser's Account and Redirect to Show the SignIn Page
+    Create CompanyUser's Account and Redirect to Show the SignIn Page
     *******************************************************************
      */
     public String createAccount() {
@@ -221,8 +210,8 @@ public class CandidateController implements Serializable {
         //-----------------------------------------------------------
         // First, check if the entered username is already being used
         //-----------------------------------------------------------
-        // Obtain the object reference of a CandidateUser object with the username entered by the user
-        CandidateUser aUser = candidateUserFacade.findByUsername(username);
+        // Obtain the object reference of a CompanyUser object with the username entered by the user
+        CompanyUser aUser = companyUserFacade.findByUsername(username);
 
         if (aUser != null) {
             // A user already exists with the username entered by the user
@@ -237,20 +226,19 @@ public class CandidateController implements Serializable {
         // The entered username is available
         //----------------------------------
         try {
-            // Instantiate a new CandidateUser object
-            CandidateUser newUser = new CandidateUser();
+            // Instantiate a new CompanyUser object
+            CompanyUser newUser = new CompanyUser();
 
             /*
              Set the properties of the newly created newUser object with the values
              entered by the user in the AccountCreationForm in CreateAccount.xhtml
              */
-            newUser.setFirstName(firstName);
-            newUser.setLastName(lastName);
+            newUser.setName(name);
+            newUser.setHomeURL(homeURL);
             newUser.setSecurityQuestionNumber(securityQuestionNumber);
             newUser.setSecurityAnswer(answerToSecurityQuestion);
-            newUser.setEmail(email);
+            newUser.setDescription(description);
             newUser.setUsername(username);
-            newUser.setCurrentPosition(currentPosition);
 
             //-------------------------------------------------------------------------------------
             // Convert the user-entered String password to a String containing the following parts
@@ -261,7 +249,7 @@ public class CandidateController implements Serializable {
             newUser.setPassword(parts);
 
             // Create the user in the database
-            candidateUserFacade.create(newUser);
+            companyUserFacade.create(newUser);
 
         } catch (EJBException | Password.CannotPerformOperationException ex) {
             username = "";
@@ -272,12 +260,12 @@ public class CandidateController implements Serializable {
         }
 
         Methods.showMessage("Information", "Success!",
-                "Candidate Account is Successfully Created!");
+                "Company Account is Successfully Created!");
 
         /*
-         The Profile page cannot be shown since the new CandidateUser has not signed in yet.
-         Therefore, we show the Sign In page for the new CandidateUser to sign in first.
+         The Profile page cannot be shown since the new CompanyUser has not signed in yet.
+         Therefore, we show the Sign In page for the new CompanyUser to sign in first.
          */
-        return "/CandidateAccount/CandidateSignIn.xhtml?faces-redirect=true";
+        return "/CompanyAccount/CompanySignIn.xhtml?faces-redirect=true";
     }
 }
