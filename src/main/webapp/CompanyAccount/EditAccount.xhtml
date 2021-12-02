@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Conner Owens on 2021.11.29
+  - Copyright © 2021 Conner Owens. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Create Account" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <div align="center" style="width:50%; margin:0 auto;">
+
+            <h1>Edit Account Profile</h1>
+
+            <h:form id="CompanyAccountCreationForm">
+
+                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                    <!--
+                   ********************************
+                   *         COMPANY NAME         *
+                   ********************************
+                   -->
+                    <p:outputLabel value="Company Name:" for="name" />
+                    <!--
+                    The required="true" attribute automatically places an asterisk *
+                    at the end of the value to indicate that the field is required.
+                    -->
+                    <p:inputText id="name" value="#{companyController.selected.name}" required="true" class="inputTextField"
+                                 requiredMessage="The Company Name field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *          WEBSITE URL         *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Website URL:" for="website" />
+                    <p:inputText id="website" value="#{companyController.selected.homeURL}" required="true" class="inputTextField"
+                                 requiredMessage="The Website URL field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+
+                    <!--
+                    ********************************
+                    *         DESCRIPTION          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Description:" for="description" />
+                    <p:inputText id="description" value="#{companyController.selected.description}" required="true" class="inputTextField"
+                                 requiredMessage="The Description field is required." >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+                </p:panelGrid>
+                <br />
+                <!--
+                ================================
+                |        SUBMIT Button         |
+                ================================
+                -->
+                <p:commandButton id="Submit" value="Submit" icon="fas fa-arrow-up" styleClass="rounded-button"
+                                 ajax="false" action="#{companyController.updateAccount()}" />
+                &nbsp;&nbsp;
+                <!--
+                ================================
+                |        CANCEL Button         |
+                ================================
+                -->
+                <p:button outcome="/CompanyAccount/CompanyProfile" value="Cancel" icon="fas fa-ban"  styleClass="ui-button-outlined" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>
