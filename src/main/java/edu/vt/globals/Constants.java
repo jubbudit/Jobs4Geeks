@@ -23,11 +23,11 @@ public final class Constants {
     //-------------------------
     // To run locally (Windows)
     //-------------------------
-    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/masha/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage/";
+    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage/";
     public static final String USER_PHOTOS_URI = "http://localhost:8080/candidatephotos/";
-    public static final String USER_FILES_ABSOLUTE_PATH = "C:/Users/masha/DocRoot/Jobs4GeeksStorage/CandidateFileStorage/";
+    public static final String USER_FILES_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidateFileStorage/";
     public static final String USER_FILES_URI = "http://localhost:8080/candidatefiles/";
-    public static final String COMPANY_PHOTOS_ABSOLUTE_PATH = "C:/Users/masha/DocRoot/Jobs4GeeksStorage/CompanyPhotoStorage/";
+    public static final String COMPANY_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CompanyPhotoStorage/";
     public static final String COMPANY_PHOTOS_URI = "http://localhost:8080/companyphotos/";
 
     //--------------------------------
