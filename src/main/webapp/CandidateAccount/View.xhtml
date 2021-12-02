@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Mashal Jalalyar on 2021.12.01
+  - Copyright © 2021 Mashal Jalalar. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <!-- 
+        ==========================================================
+        |  Clicking the VIEW button displays this Dialog window  |
+        |  for the user to view the selected candidates's data.  |
+        ==========================================================
+        -->
+        <p:dialog id="CandidateViewDlg" header="#{candidateController.fullName()}" widgetVar="CandidateViewDialog"
+                  modal="true" position="center" appendTo="@(body)"
+                  showEffect="slide" hideEffect="fade" responsive="true" >
+
+            <h:form id="CandidateViewForm" class="ui-datatable-data">
+                <div align="center" >
+                    <h:graphicImage styleClass="profilePhoto" value="#{candidateController.getPhoto(candidateController.selected)}" />
+                </div>
+                <br />
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" 
+                                 rendered="#{candidateController.selected != null}">
+                        
+                        <h:outputText value="First Name:"/>
+                        <h:outputText value="#{candidateController.selected.firstName}"/>
+
+                        <h:outputText value="Last Name:"/>
+                        <h:outputText value="#{candidateController.selected.lastName}"/>
+
+                        <h:outputText value="Current Position:"/>
+                        <h:outputText value="#{candidateController.selected.currentPosition}"/>
+
+                        <h:outputText value="Email:"/>
+                        <h:outputText value="#{candidateController.selected.email}"/>
+
+                        <h:outputText value="Username:"/>
+                        <h:outputText value="#{candidateController.selected.username}"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <br />
+                    <div align="center">
+                        <!-- CLOSE button -->
+                        <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                         onclick="PF('CandidateViewDialog').hide()" />
+                    </div>
+                </h:panelGroup>
+                
+            </h:form>
+
+        </p:dialog>
+    </ui:composition>
+</html>

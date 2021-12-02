@@ -275,6 +275,18 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
     border: none;
 }
 
+/* Scrolls text vertically */
+.scrollableTextBox {
+    display: block;
+    text-align: left;
+    width: 300px;
+    height: 70px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
 /*
 =================================
 Skinning PrimeFaces UI Components

@@ -5,6 +5,7 @@
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.CandidateUser;
+import edu.vt.EntityBeans.CompanyUser;
 import edu.vt.EntityBeans.UserPhoto;
 import edu.vt.FacadeBeans.CandidateUserFacade;
 import edu.vt.FacadeBeans.UserPhotoFacade;
@@ -161,7 +162,12 @@ public class CandidateController implements Serializable {
         if (selected == null) {
             // Store the object reference of the signed-in CandidateUser into the instance variable selected.
             Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            selected = (CandidateUser) sessionMap.get("user");
+
+            if(!(sessionMap.get("user") instanceof CandidateUser)){
+                selected = new CandidateUser();
+            }
+            else
+                selected = (CandidateUser) sessionMap.get("user");
         }
         // Return the object reference of the selected (i.e., signed-in) CandidateUser object
         return selected;
@@ -171,12 +177,19 @@ public class CandidateController implements Serializable {
         this.selected = selected;
     }
 
+    public List<CandidateUser> getAllCandidates() {
+        return candidateUserFacade.findAll();
+    }
 
     /*
     ================
     Instance Methods
     ================
      */
+
+    public String fullName(){
+        return selected.getFirstName() + " " + selected.getLastName();
+    }
 
     /*
     **********************************
@@ -499,6 +512,17 @@ public class CandidateController implements Serializable {
         return Constants.USER_PHOTOS_URI + thumbnailFileName;
     }
 
+    public String getPhoto(CandidateUser candidateUser){
+        List<UserPhoto> photoList = userPhotoFacade.findPhotosByUserPrimaryKey(candidateUser.getId());
+        if (photoList.isEmpty()) {
+            // No user photo exists. Return defaultUserPhoto.png.
+            return Constants.USER_PHOTOS_URI + "defaultUserPhoto.png";
+        }
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        return Constants.USER_PHOTOS_URI + thumbnailFileName;
+    }
+
     /*
     *********************************************************
     Delete the photo and thumbnail image files that belong to
@@ -543,7 +567,7 @@ public class CandidateController implements Serializable {
                  Delete the user's captured photo file if it exists.
                  The file is named "user's primary key_tempFile".
                  */
-                String capturedPhotoFilepath = Constants.USER_PHOTOS_ABSOLUTE_PATH + primaryKey + "_tempFile";
+                String capturedPhotoFilepath = Constants.COMPANY_PHOTOS_ABSOLUTE_PATH + primaryKey + "_tempFile";
                 Files.deleteIfExists(Paths.get(capturedPhotoFilepath));
 
             } catch (IOException ex) {

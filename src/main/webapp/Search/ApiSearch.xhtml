@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Created by Luke Janoschka on 2021.11.30
+ - Copyright © 2021 Luke Janoschka. All rights reserved.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition>
+    <p:dialog id="ApiSearchDlg" header="Search Job API" widgetVar="ApiSearchDialog"
+              modal="true" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="fade" responsive="true" >
+
+        <h:form id="ApiSearchForm">
+            <p:panel>
+                <h:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn1">
+                    <h:outputLabel value="Search: " for="searchString"/>
+                    <p:inputText id="searchString" value="#{apiController.searchString}"
+                                 required="true" requiredMessage="Please Enter a Search String!"
+                                 placeholder="Enter search string" >
+                        <f:validateLength minimum="2" />
+                    </p:inputText>
+                </h:panelGrid>
+
+                <h:panelGroup>
+                    <br /><br />
+                    <div align="center">
+                        <!-- SUBMIT button -->
+                        <p:commandButton value="Search" icon="fas fa-search" styleClass="rounded-button"
+                                         ajax="false" action="#{apiController.performSearch()}" />
+                        <!-- CLEAR button -->
+                        <p:commandButton value="Clear" icon="fas fa-undo" styleClass="ui-button-outlined"
+                                         ajax="false" action="#{apiController.clearSearch()}" />
+                        <!-- CANCEL button -->
+                        <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
+                                         onclick="PF('ApiSearchDialog').hide()" immediate="true" />
+                    </div>
+                </h:panelGroup>
+            </p:panel>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+</html>

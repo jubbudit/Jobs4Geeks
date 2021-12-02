@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Mashal Jalalyar on 2021.12.01
+  - Copyright © 2021 Mashal Jalalar. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Candidates List" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <br />
+        <div align="center">
+            <h:form id="CandidateListForm">
+                <p:panel header="List of All Candidates">
+                    <p:dataTable id="datalist" value="#{candidateController.getAllCandidates()}" var="item"
+                                 selectionMode="single" selection="#{candidateController.selected}"
+                                 reflow="true"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,20,30,40,50"
+                                 class="dataTable">
+
+                        <p:ajax event="rowSelect"   update="viewButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton"/>
+
+                        <!--
+                        ********************************
+                        *       Canidate Photo column  *
+                        ********************************
+                        -->
+                        <p:column headerText="Candidate Photo" style="text-align:center; width:30px;">
+                            <!--
+                            Display the user's photo in a small circle. The cache="false" option
+                            enables immediate display of a newly uploaded photo without using cache.
+                            -->
+                            <p:graphicImage cache="false" class="smallProfilePhoto" value="#{candidateController.getPhoto(item)}" />
+                        </p:column>
+
+                        <!--
+                        ********************************
+                        *    First Name column         *
+                        ********************************
+                        -->
+                        <p:column headerText="First Name"  style="text-align:center; width:50px;">
+                            <h:outputText value="#{item.firstName}"/>
+                        </p:column>
+
+                        <!--
+                        ********************************
+                        *    Last Name column          *
+                        ********************************
+                        -->
+                        <p:column headerText="Last Name" style="text-align:center; width:50px;">
+                            <h:outputText value="#{item.lastName}"/>
+                        </p:column>
+
+                        <!--
+                        ********************************
+                        *    Current Position column   *
+                        ********************************
+                        -->
+                        <p:column headerText="Current Position" style="text-align:center; width:50px;">
+                            <h:outputText value="#{item.currentPosition}"/>
+                        </p:column>
+
+                        <!--
+                        ********************************
+                        *    email column          *
+                        ********************************
+                        -->
+                        <p:column headerText="Email" style="text-align:center; width:50px;">
+                            <h:outputText value="#{item.email}"/>
+                        </p:column>
+
+                        <!--
+                        ********************************
+                        *    Username column           *
+                        ********************************
+                        -->
+                        <p:column headerText="Username" style="text-align:center; width:50px;">
+                            <h:outputText value="#{item.username}"/>
+                        </p:column>
+                        <!--
+                      ********************************
+                      *           Footer             *
+                      ********************************
+                      -->
+                        <f:facet name="footer">
+                            <div align="center">
+                                <!--
+                                ===========
+                                VIEW Button
+                                ===========
+                                -->
+                                <p:commandButton id="viewButton" value="View" icon="fas fa-eye" styleClass="rounded-button"
+                                                 update=":CandidateViewForm, :CandidateViewDlg" oncomplete="PF('CandidateViewDialog').show()"
+                                                 disabled="#{empty candidateController.selected}"/>
+                                &nbsp;
+                            </div>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </div>
+        <ui:include src="/CandidateAccount/View.xhtml"/>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

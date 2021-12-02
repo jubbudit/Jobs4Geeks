@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Created by Luke Janoschka on 2021.11.30
+ - Copyright © 2021 Luke Janoschka. All rights reserved.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="API Search Results" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center">
+            <h:form id="ApiSearchResultsForm">
+                <p:panel header="API Search Results">
+                    <p:dataTable id="datalist"
+                                 value="#{apiController.listOfSearchedJobs}"
+                                 var="aJob"
+                                 widgetVar="recipeDataTable"
+                                 selectionMode="single"
+                                 selection="#{apiController.selected}"
+                                 reflow="true"
+                                 showGridlines="true"
+                                 paginator="true"
+                                 rowKey="#{aJob.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,20,30,50,70,90"
+                                 emptyMessage="No recipe found for the search query entered!" >
+
+                        <p:ajax event="rowSelect"   update="viewButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton"/>
+
+                        <!-- Table Header -->
+                        <f:facet name="header">
+                            <div align="center">
+                                <p:inputText id="globalFilter" onkeyup="PF('recipeDataTable').filter()" filterMatchMode="contains"
+                                             style="width: 250px"
+                                             placeholder="Enter Global Search Query" />
+                                <p:commandButton type="button" value="Clear All Filters" styleClass="ui-button-outlined"
+                                                 icon="fas fa-undo" onclick="PF('recipeDataTable').clearFilters()" />
+                            </div>
+                        </f:facet>
+
+                        <!-- Title Column -->
+                        <p:column headerText="Job Title" sortBy="#{aJob.title}"
+                                  filterBy="#{aJob.title}" filterMatchMode="contains"
+                                  style="width: 150px; text-align: center; vertical-align: center">
+                            <a href="#{aJob.appUrl}"><h:outputText value="#{aJob.title}"/></a>
+                        </p:column>
+
+                        <!-- Description Column -->
+                        <p:column headerText="Job Description"
+                                  style="width: 300px; text-align: center; vertical-align: top">
+                            <h:outputText value="#{aJob.description}" styleClass="scrollableTextBox" style="width: 100%"/>
+                        </p:column>
+
+                        <!-- Company Column -->
+                        <p:column headerText="Company" sortBy="#{aJob.companyName}"
+                                  filterBy="#{aJob.companyName}" filterMatchMode="contains"
+                                  style="width: 120px; text-align: center; vertical-align: center">
+                            <h:outputText value="#{aJob.companyName}"/>
+                        </p:column>
+
+                        <!-- Field Column -->
+                        <p:column headerText="Field" sortBy="#{aJob.field}"
+                                  filterBy="#{aJob.field}" filterMatchMode="contains"
+                                  style="width: 100px; text-align: center; vertical-align: center">
+                            <h:outputText value="#{aJob.field}"/>
+                        </p:column>
+
+                        <!-- Data table footer -->
+                        <f:facet name="footer">
+                            <div align="center">
+
+                                <!-- VIEW button: id is used since it is referenced to be activated or deactivated -->
+                                <p:commandButton id="viewButton" value="View" icon="fas fa-eye" styleClass="rounded-button"
+                                                 update=":apiSearchDetailsDlg" oncomplete="PF('apiSearchDetailsDialog').show()"
+                                                 disabled="#{empty apiController.selected}"/>
+                            </div>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </div>
+
+        <!-- INFO dialog box -->
+
+        <p:dialog id="apiSearchDetailsDlg" header="Job Details" widgetVar="apiSearchDetailsDialog"
+                  modal="true" width="50%" position="center" appendTo="@(body)" height="400px"
+                  showEffect="slide" hideEffect="fade" responsive="true" >
+            <h:form id="apiSearchDetailsForm">
+                <div align="center">
+                    <h1><h:outputText value="#{apiController.selected.title}"/></h1>
+
+                    <table style="text-align: center; border: black 3px solid;">
+                        <tr class="table-title">
+                            <td>Description</td>
+                        </tr>
+                        <tr class="table-content">
+                            <td><h:outputText value="#{apiController.selected.description}"/></td>
+                        </tr>
+                        <tr class="table-title">
+                            <td>Company</td>
+                        </tr>
+                        <tr class="table-content">
+                            <td><h:outputText value="#{apiController.selected.companyName}"/></td>
+                        </tr>
+                        <tr class="table-title">
+                            <td>Field</td>
+                        </tr>
+                        <tr class="table-content">
+                            <td><h:outputText value="#{apiController.selected.field}"/></td>
+                        </tr>
+                        <tr class="table-title">
+                            <td>Application Link</td>
+                        </tr>
+                        <tr class="table-content">
+                            <td><a href="#{apiController.selected.appUrl}"><h:outputText value="#{apiController.selected.appUrl}"/></a></td>
+                        </tr>
+                    </table><br/>
+                    <p:commandButton styleClass="rounded-button" value="Add to Favorites"/>
+                </div>
+            </h:form>
+            <style type="text/css">
+                .table-title {
+                    font-weight: bold;
+                }
+                .table-content {
+                    color: dimgrey;
+                }
+            </style>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
+

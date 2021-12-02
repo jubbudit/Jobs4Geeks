@@ -4,8 +4,12 @@
  */
 package edu.vt.controllers;
 
+import edu.vt.EntityBeans.*;
 import edu.vt.EntityBeans.CompanyUser;
+import edu.vt.FacadeBeans.CandidateUserFacade;
+import edu.vt.FacadeBeans.CompanyPhotoFacade;
 import edu.vt.FacadeBeans.CompanyUserFacade;
+import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
@@ -19,6 +23,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Named("companyController")
@@ -46,6 +51,14 @@ public class CompanyController implements Serializable {
 
     @EJB
     private CompanyUserFacade companyUserFacade;
+
+    @EJB
+    private CandidateUserFacade candidateUserFacade;
+
+    @EJB
+    private UserPhotoFacade userPhotoFacade;
+    @EJB
+    private CompanyPhotoFacade companyPhotoFacade;
 
 
     /*
@@ -112,6 +125,91 @@ public class CompanyController implements Serializable {
         return security_questions;
     }
 
+    /*
+    ****************************************
+    Return the Security Question Selected by
+    the CompanyUser at the Time of Account Creation
+    ****************************************
+     */
+    public String getSelectedSecurityQuestion() {
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CompanyUser signedInUser = (CompanyUser) sessionMap.get("user");
+
+        // Obtain the number of the security question selected by the user
+        int questionNumber = signedInUser.getSecurityQuestionNumber();
+
+        // Return the security question corresponding to the question number
+        return Constants.QUESTIONS[questionNumber];
+    }
+
+    /*
+    *********************************************
+    Process Submitted Answer to Security Question
+    *********************************************
+     */
+    public void securityAnswerSubmit() {
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CompanyUser signedInUser = (CompanyUser) sessionMap.get("user");
+
+        String actualSecurityAnswer = signedInUser.getSecurityAnswer();
+
+        // getAnswerToSecurityQuestion() is the Getter method for the property 'answerToSecurityQuestion'
+        String enteredSecurityAnswer = getAnswerToSecurityQuestion();
+
+        if (actualSecurityAnswer.equals(enteredSecurityAnswer)) {
+            // Answer to the security question is correct; Delete the user's account.
+            // deleteAccount() method is given below.
+            deleteAccount();
+        } else {
+            Methods.showMessage("Error",
+                    "Answer to the Security Question is Incorrect!", "");
+        }
+    }
+
+    /*
+  *****************************************************************
+  Delete CandidateUser's Account, Logout, and Redirect to Show the Home Page
+  *****************************************************************
+   */
+    public void deleteAccount() {
+        Methods.preserveMessages();
+        /*
+        The database primary key of the signed-in CandidateUser object was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        int userPrimaryKey = (int) sessionMap.get("user_id");
+
+        try {
+            // Delete all of the photo files associated with the signed-in user whose primary key is userPrimaryKey
+            //deleteAllUserPhotos(userPrimaryKey);
+
+            // Delete the CandidateUser entity, whose primary key is user_id, from the database
+            companyUserFacade.deleteUser(userPrimaryKey);
+
+            Methods.showMessage("Information", "Success!",
+                    "Your Account is Successfully Deleted!");
+
+        } catch (EJBException ex) {
+            username = "";
+            Methods.showMessage("Fatal Error",
+                    "Something went wrong while deleting user's account!",
+                    "See: " + ex.getMessage());
+            return;
+        }
+
+        // Execute the logout() method given below
+        logout();
+    }
+
     public void setSecurity_questions(Map<String, Object> security_questions) {
         this.security_questions = security_questions;
     }
@@ -120,7 +218,12 @@ public class CompanyController implements Serializable {
         if (selected == null) {
             // Store the object reference of the signed-in CompanyUser into the instance variable selected.
             Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            selected = (CompanyUser) sessionMap.get("user");
+
+            if(!(sessionMap.get("user") instanceof CompanyUser)){
+                selected = new CompanyUser();
+            }
+            else
+                selected = (CompanyUser) sessionMap.get("user");
         }
         // Return the object reference of the selected (i.e., signed-in) CompanyUser object
         return selected;
@@ -158,6 +261,21 @@ public class CompanyController implements Serializable {
     Instance Methods
     ================
      */
+
+    public List<CompanyUser> getAllCompanies() {
+        return companyUserFacade.findAll();
+    }
+
+    public String getPhoto(CompanyUser companyUser){
+        List<CompanyPhoto> photoList = companyPhotoFacade.findPhotosByUserPrimaryKey(companyUser.getId());
+        if (photoList.isEmpty()) {
+            // No user photo exists. Return defaultUserPhoto.png.
+            return Constants.COMPANY_PHOTOS_URI + "defaultUserPhoto.png";
+        }
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        return Constants.COMPANY_PHOTOS_URI + thumbnailFileName;
+    }
 
     /*
     **********************************
@@ -269,6 +387,83 @@ public class CompanyController implements Serializable {
          Therefore, we show the Sign In page for the new CompanyUser to sign in first.
          */
         return "/CompanyAccount/CompanySignIn.xhtml?faces-redirect=true";
+    }
+
+    /*
+   ***********************************************************
+   Update CompanyUser's Account and Redirect to Show the Profile Page
+   ***********************************************************
+    */
+    public String updateAccount() {
+
+        // Since we will redirect to show the Profile page, invoke preserveMessages()
+        Methods.preserveMessages();
+
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CompanyUser editUser = (CompanyUser) sessionMap.get("user");
+
+        try {
+            /*
+             Set the signed-in user's properties to the values entered by
+             the user in the EditAccountProfileForm in EditAccount.xhtml.
+             */
+            editUser.setName(this.selected.getName());
+            editUser.setDescription(this.selected.getDescription());
+            editUser.setHomeURL(this.selected.getHomeURL());
+
+            // Store the changes in the database
+            companyUserFacade.edit(editUser);
+
+            Methods.showMessage("Information", "Success!",
+                    "CompanyUser's Account is Successfully Updated!");
+
+        } catch (EJBException ex) {
+            username = "";
+            Methods.showMessage("Fatal Error",
+                    "Something went wrong while updating user's profile!",
+                    "See: " + ex.getMessage());
+            return "";
+        }
+
+        // Account update is completed, redirect to show the Profile page.
+        return "/CompanyAccount/CompanyProfile?faces-redirect=true";
+    }
+
+    /*
+    *********************************************************
+    Return Signed-In CompanyUser's Thumbnail Photo Relative Filepath
+    *********************************************************
+     */
+    public String userPhoto() {
+
+        /*
+        The database primary key of the signed-in CandidateUser object was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Integer primaryKey = (Integer) sessionMap.get("user_id");
+
+        List<CompanyPhoto> photoList = companyPhotoFacade.findPhotosByUserPrimaryKey(primaryKey);
+
+        if (photoList.isEmpty()) {
+            // No user photo exists. Return defaultUserPhoto.png from the BevqPhotoStorage directory.
+            System.out.println("EMPTY PHOTO LIST");
+            return Constants.COMPANY_PHOTOS_URI + "defaultUserPhoto.png";
+        }
+
+        /*
+        photoList.get(0) returns the object reference of the first Photo object in the list.
+        getThumbnailFileName() message is sent to that Photo object to retrieve its
+        thumbnail image file name, e.g., 5_thumbnail.jpeg
+         */
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        System.out.println(Constants.COMPANY_PHOTOS_URI + thumbnailFileName);
+        return Constants.COMPANY_PHOTOS_URI + thumbnailFileName;
     }
 
     /*
