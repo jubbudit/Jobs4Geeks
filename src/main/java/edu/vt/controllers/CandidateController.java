@@ -543,7 +543,7 @@ public class CandidateController implements Serializable {
                  Delete the user's captured photo file if it exists.
                  The file is named "user's primary key_tempFile".
                  */
-                String capturedPhotoFilepath = Constants.USER_PHOTOS_ABSOLUTE_PATH + primaryKey + "_tempFile";
+                String capturedPhotoFilepath = Constants.COMPANY_PHOTOS_ABSOLUTE_PATH + primaryKey + "_tempFile";
                 Files.deleteIfExists(Paths.get(capturedPhotoFilepath));
 
             } catch (IOException ex) {
