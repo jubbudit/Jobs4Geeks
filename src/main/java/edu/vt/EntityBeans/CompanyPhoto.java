@@ -1,3 +1,8 @@
+/*
+ * Created by Mashal Jalalyar on 2021.12.01
+ * Copyright © 2021 Mashal Jalalyar. All rights reserved.
+ */
+
 package edu.vt.EntityBeans;
 
 import edu.vt.globals.Constants;
