@@ -301,7 +301,7 @@ Skinning PrimeFaces UI Components
 
 /* Used in TakeSurvey to color panel backgrounds */
 .ui-panel-content {
-    background-color: oldlace !important;
+    background-color: snow !important;
 }
 
 /* Override PrimeFaces style definition for the fileUpload component */
