@@ -31,9 +31,11 @@
                         <!-- SUBMIT button -->
                         <p:commandButton value="Search" icon="fas fa-search" styleClass="rounded-button"
                                          ajax="false" action="#{apiController.performSearch()}" />
+                        &nbsp;
                         <!-- CLEAR button -->
                         <p:commandButton value="Clear" icon="fas fa-undo" styleClass="ui-button-outlined"
                                          ajax="false" action="#{apiController.clearSearch()}" />
+                        &nbsp;
                         <!-- CANCEL button -->
                         <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
                                          onclick="PF('ApiSearchDialog').hide()" immediate="true" />
