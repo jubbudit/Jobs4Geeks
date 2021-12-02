@@ -101,6 +101,7 @@ siteTemplate for the entire site, achieving great maintainability.
 
 
                             <p:menuitem value="About" outcome="/About" icon="fas fa-info-circle"/>
+                            <p:menuitem value="Search API" onclick="PF('ApiSearchDialog').show();return false;" icon="fas fa-search" />
                         </p:menu>
                     </div>
                 </td>
@@ -108,5 +109,6 @@ siteTemplate for the entire site, achieving great maintainability.
             </tr>
         </table>
     </h:form>
+    <ui:include src="/Search/ApiSearch.xhtml"/>
 </ui:composition>
 </html>
