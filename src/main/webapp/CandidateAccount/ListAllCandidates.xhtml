@@ -111,6 +111,14 @@
                                                  update=":CandidateViewForm, :CandidateViewDlg" oncomplete="PF('CandidateViewDialog').show()"
                                                  disabled="#{empty candidateController.selected}"/>
                                 &nbsp;
+
+                                <!--
+                                ===========
+                                Email Button
+                                ===========
+                                -->
+                                <p:button outcome="/Email/Email.xhtml" value="Email" icon="fas fa-mail" styleClass="rounded-button"
+                                          disabled="#{empty companyController.selected}"/>
                             </div>
                         </f:facet>
                     </p:dataTable>

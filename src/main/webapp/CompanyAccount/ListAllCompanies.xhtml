@@ -35,8 +35,8 @@
                                  rowsPerPageTemplate="5,10,20,30,40,50"
                                  class="dataTable">
 
-                        <p:ajax event="rowSelect"   update="viewButton"/>
-                        <p:ajax event="rowUnselect" update="viewButton"/>
+                        <p:ajax event="rowSelect"   update="viewButton" />
+                        <p:ajax event="rowUnselect" update="viewButton" />
 
                         <!--
                         ********************************
@@ -95,6 +95,13 @@
                                                  update=":CompanyViewForm, :CompanyViewDlg" oncomplete="PF('CompanyViewDialog').show()"
                                                  disabled="#{empty companyController.selected}"/>
                                 &nbsp;
+                                <!--
+                                ===========
+                                Email Button
+                                ===========
+                                -->
+                                <p:button outcome="/Email/Email.xhtml" value="Email" icon="fas fa-mail" styleClass="rounded-button"
+                                          disabled="#{empty companyController.selected}"/>
                             </div>
                         </f:facet>
                     </p:dataTable>
