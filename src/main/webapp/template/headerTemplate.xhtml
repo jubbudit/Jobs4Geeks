@@ -90,11 +90,16 @@ siteTemplate for the entire site, achieving great maintainability.
                                     <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{candidateController.userPhoto()}" />
                                     &nbsp;My Account
                                 </p:menuitem>
+                                <p:menuitem value="List of Companies" outcome="/CompanyAccount/ListAllCompanies" icon="fas fa-list" />
                                 <p:menuitem value="Sign Out" action="#{candidateController.logout()}" icon="fas fa-sign-out-alt" />
                             </c:if>
 
                             <!-- Menu Options if there is a COMPANY signed in -->
                             <c:if test="#{companyController.isLoggedIn() == true}">
+                                <p:menuitem outcome="/CompanyAccount/CompanyProfile">
+                                    <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{companyController.userPhoto()}" />
+                                    &nbsp;My Account
+                                </p:menuitem>
                                 <p:menuitem value="List of Candidates" outcome="/CandidateAccount/ListAllCandidates" icon="fas fa-list" />
                                 <p:menuitem value="Sign Out" action="#{companyController.logout()}" icon="fas fa-sign-out-alt" />
                             </c:if>

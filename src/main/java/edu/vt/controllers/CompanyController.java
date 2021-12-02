@@ -218,7 +218,12 @@ public class CompanyController implements Serializable {
         if (selected == null) {
             // Store the object reference of the signed-in CompanyUser into the instance variable selected.
             Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            selected = (CompanyUser) sessionMap.get("user");
+
+            if(!(sessionMap.get("user") instanceof CompanyUser)){
+                selected = new CompanyUser();
+            }
+            else
+                selected = (CompanyUser) sessionMap.get("user");
         }
         // Return the object reference of the selected (i.e., signed-in) CompanyUser object
         return selected;
@@ -256,6 +261,21 @@ public class CompanyController implements Serializable {
     Instance Methods
     ================
      */
+
+    public List<CompanyUser> getAllCompanies() {
+        return companyUserFacade.findAll();
+    }
+
+    public String getPhoto(CompanyUser companyUser){
+        List<CompanyPhoto> photoList = companyPhotoFacade.findPhotosByUserPrimaryKey(companyUser.getId());
+        if (photoList.isEmpty()) {
+            // No user photo exists. Return defaultUserPhoto.png.
+            return Constants.COMPANY_PHOTOS_URI + "defaultUserPhoto.png";
+        }
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        return Constants.COMPANY_PHOTOS_URI + thumbnailFileName;
+    }
 
     /*
     **********************************
