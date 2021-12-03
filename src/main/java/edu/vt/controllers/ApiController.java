@@ -19,6 +19,10 @@ import java.util.ArrayList;
 public class ApiController implements Serializable {
 
     private String searchString;
+    private Integer minSalary;
+    private String location;
+    private String fullTime;
+    private String contract;
 
     private ApiJob selected;
     private ArrayList<ApiJob> listOfSearchedJobs;
@@ -48,6 +52,38 @@ public class ApiController implements Serializable {
         this.listOfSearchedJobs = listOfSearchedJobs;
     }
 
+    public Integer getMinSalary() {
+        return minSalary;
+    }
+
+    public void setMinSalary(Integer minSalary) {
+        this.minSalary = minSalary;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getFullTime() {
+        return fullTime;
+    }
+
+    public void setFullTime(String fullTime) {
+        this.fullTime = fullTime;
+    }
+
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String permanent) {
+        this.contract = permanent;
+    }
+
     public String performSearch() throws Exception {
 
         selected = null;
@@ -55,8 +91,36 @@ public class ApiController implements Serializable {
 
         searchString = searchString.replaceAll(" ", "%20");
 
-        String searchApiUrl = "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=c3faa28e&app_key=b6b19e95adc1546833e7fe979ee2b7b9&results_per_page=20&what="
-                + searchString  + "&content-type=application/json";
+        StringBuilder sb = new StringBuilder();
+        sb.append("https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=c3faa28e&app_key=b6b19e95adc1546833e7fe979ee2b7b9&results_per_page=20&what=");
+        sb.append(searchString);
+        if (minSalary != null) {
+            sb.append("&salary_min=");
+            sb.append(minSalary);
+        }
+        if (location != null) {
+            sb.append("&where=");
+            location = location.replaceAll(" ", "%20");
+            sb.append(location);
+        }
+        if (fullTime != null) {
+            if (fullTime.equals("1")) {
+                sb.append("&full_time=1");
+            }
+            if (fullTime.equals("0")) {
+                sb.append("&part_time=1");
+            }
+        }
+        if (contract != null) {
+            if (contract.equals("1")) {
+                sb.append("&contract=1");
+            }
+            if (contract.equals("0")) {
+                sb.append("&permanent=1");
+            }
+        }
+        sb.append("&content-type=application/json");
+        String searchApiUrl = sb.toString();
 
         try {
             // Obtain the JSON file containing the movie search results at the given page number
@@ -135,5 +199,9 @@ public class ApiController implements Serializable {
     public void clearSearch() {
         searchString = null;
         listOfSearchedJobs = null;
+        minSalary = null;
+        location = null;
+        fullTime = null;
+        contract = null;
     }
 }

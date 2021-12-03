@@ -17,13 +17,36 @@
         <h:form id="ApiSearchForm">
             <p:panel>
                 <h:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn1">
-                    <h:outputLabel value="Search: " for="searchString"/>
+                    <h:outputLabel value="Search:* " for="searchString"/>
                     <p:inputText id="searchString" value="#{apiController.searchString}"
                                  required="true" requiredMessage="Please Enter a Search String!"
                                  placeholder="Enter search string" >
                         <f:validateLength minimum="2" />
                     </p:inputText>
+                    <h:outputLabel value="Minimum Salary: " for="minSalary"/>
+                    <p:inputNumber id="minSalary" value="#{apiController.minSalary}"
+                                    decimalPlaces="0" thousandSeparator="" symbol="$" symbolPosition="p">
+                        <f:convertNumber groupingUsed="false" currencySymbol="$" integerOnly="true" type="number"/>
+                    </p:inputNumber>
+                    <!--
+                    This doesn't seem to be working correctly - it might be an issue with the API
+                    <h:outputLabel value="Location: " for="location"/>
+                    <p:inputText id="location" value="#{apiController.location}"
+                                 placeholder="Enter location" >
+                    </p:inputText>
+                    -->
+                    <h:outputLabel value="Employment status: " for="fullTime"/>
+                    <p:selectOneButton value="#{apiController.fullTime}" id="fullTime">
+                        <f:selectItem itemValue="1" itemLabel="Full time"/>
+                        <f:selectItem itemValue="0" itemLabel="Part time"/>
+                    </p:selectOneButton>
+                    <h:outputLabel value="Contract: " for="permanent"/>
+                    <p:selectOneButton value="#{apiController.contract}" id="permanent">
+                        <f:selectItem itemValue="1" itemLabel="Contract"/>
+                        <f:selectItem itemValue="0" itemLabel="Permanent"/>
+                    </p:selectOneButton>
                 </h:panelGrid>
+                <h3>*Required</h3>
 
                 <h:panelGroup>
                     <br /><br />

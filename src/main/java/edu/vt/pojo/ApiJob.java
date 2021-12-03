@@ -7,7 +7,7 @@ package edu.vt.pojo;
 public class ApiJob {
 
     /*
-CREATE TABLE JobListingv
+CREATE TABLE JobListing
 (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     company_name VARCHAR(128) NOT NULL,
