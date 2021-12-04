@@ -38,6 +38,7 @@ representing the UserFile table in the CloudDriveDB database.
         , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
         , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
         , @NamedQuery(name = "UserFile.findByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+        , @NamedQuery(name = "UserFile.findResume", query = "SELECT u FROM UserFile u WHERE u.isResume = TRUE")
 })
 
 public class UserFile implements Serializable {
@@ -51,6 +52,7 @@ public class UserFile implements Serializable {
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
         user_id INT UNSIGNED,
         filename VARCHAR(255) NOT NULL,
+        isResume BOOLEAN NOT NULL,
         FOREIGN KEY (user_id) REFERENCES CandidateUser(id) ON DELETE CASCADE
     );
 
@@ -71,6 +73,12 @@ public class UserFile implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "filename")
     private String filename;
+
+    // isResume BOOLEAN NOT NULL
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isResume")
+    private Boolean isResume;
 
     // user_id INT UNSIGNED
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -112,6 +120,14 @@ public class UserFile implements Serializable {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public Boolean isResume() {
+        return isResume;
+    }
+
+    public void setResume(Boolean resume) {
+        isResume = resume;
     }
 
     public CandidateUser getUserId() {
@@ -165,5 +181,6 @@ public class UserFile implements Serializable {
     public String getFilePath() {
         return Constants.USER_FILES_ABSOLUTE_PATH + getFilename();
     }
+
 
 }

@@ -304,6 +304,22 @@ public class FileController implements Serializable {
     }
 
     /*
+    ====================================
+    Sets the Selected File as the Resume
+    ====================================
+     */
+    public void setSelectedAsResume() {
+        for (UserFile file : listOfUserFiles) {
+            file.setResume(false);
+            userFileFacade.edit(file);
+        }
+        selected.setResume(true);
+        userFileFacade.edit(selected);
+        refreshFileList();
+    }
+
+
+    /*
     ========================
     Refresh User's File List
     ========================

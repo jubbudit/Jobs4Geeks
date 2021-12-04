@@ -8,7 +8,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <!-- This page is constructed based on the siteTemplate -->
 <ui:composition template="/template/siteTemplate.xhtml">
@@ -40,7 +41,7 @@
                                  rowIndexVar="rowNumber"
                                  first="#{userFileController.selectedRowNumber}" >
 
-                        <p:ajax event="rowSelect" update="uploadButton deleteButton displayButton">
+                        <p:ajax event="rowSelect" update="uploadButton deleteButton displayButton setResumeButton">
                             #{userFileController.setSelectedRowNumber(rowNumber)};
                         </p:ajax>
 
@@ -61,7 +62,7 @@
                                 getter and setter methods for it in UserFileController.java.
                         -->
 
-                        <p:ajax event="rowUnselect" update="uploadButton deleteButton displayButton"/>
+                        <p:ajax event="rowUnselect" update="uploadButton deleteButton displayButton setResumeButton"/>
 
                         <!--
                         ********************************
@@ -80,6 +81,15 @@
                         -->
                         <p:column sortBy="#{aUserFile.filename}" headerText="File Name" >
                             <h:outputText value="#{userFileController.cleanedFilenameForFileId(aUserFile.id)}"/>
+                        </p:column>
+
+                        <!--
+                        ********************************
+                        *        RESUME TAG column     *
+                        ********************************
+                        -->
+                        <p:column headerText="Resume" style="width: 150px; text-align: center">
+                            <h:outputText styleClass="fas fa-check" rendered="#{aUserFile.isResume()}" />
                         </p:column>
 
                         <!--
@@ -144,6 +154,16 @@
                                 <p:commandButton id="displayButton" value="Display File" icon="fas fa-file-alt" styleClass="rounded-button"
                                                  action="/CandidateAccount/Files/DisplayFile?faces-redirect=true"
                                                  ajax="false" disabled="#{empty userFileController.selected}" />
+                                &nbsp;
+                                <!--
+                                ================================
+                                |      SET RESUME Button       |
+                                ================================
+                                -->
+                                <p:commandButton id="setResumeButton" value="Set as Resume" icon="fas fa-file-import" styleClass="rounded-button"
+                                                 actionListener="#{userFileController.setSelectedAsResume()}"
+                                                 update=":UserFileListForm" ajax="true"
+                                                 disabled="#{empty userFileController.selected}" />
 
                             </div>
                         </f:facet>

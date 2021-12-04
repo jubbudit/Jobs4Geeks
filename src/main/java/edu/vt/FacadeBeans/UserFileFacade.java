@@ -78,4 +78,8 @@ public class UserFileFacade extends AbstractFacade<UserFile> {
                 .getResultList();
     }
 
+    public UserFile findResume() {
+        return (UserFile) entityManager.createNamedQuery("UserFile.findResume").getSingleResult();
+    }
+
 }
