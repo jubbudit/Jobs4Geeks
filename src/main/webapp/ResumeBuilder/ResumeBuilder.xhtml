@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Luke Janoschka on 2021.12.05
+  - Copyright © 2021 Luke Janoschka. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Resume Builder" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center" style="width:97%">
+
+            <h1>Resume Builder</h1>
+            <br />
+            <h:form id="resumeBuilderForm">
+
+                <p:dataTable id="datalist" value="#{resumeBuilderController.resumeTable}" var="row"
+                             selectionMode="single" selection="#{resumeBuilderController.selected}"
+                             reflow="true"
+                             paginator="true"
+                             rowKey="#{row.id}"
+                             rows="15"
+                             rowsPerPageTemplate="5,10,15,20"
+                             class="dataTable" >
+
+                    <p:ajax event="rowSelect"   update="detailsButton eduButton actButton expButton deleteButton pdfButton"/>
+                    <p:ajax event="rowUnselect" update="detailsButton eduButton actButton expButton deleteButton pdfButton"/>
+
+                    <p:column headerText="" style="width:40px;text-align:center;"
+                              exportFunction="#{row.getCol1()}">
+                        <h:outputText class="standardText" value="#{row.col1}"/>
+                    </p:column>
+
+                    <p:column headerText="" style="width:40px;text-align:center;"
+                              exportFunction="#{row.getCol2()}">
+                        <h:outputText class="standardText" value="#{row.col2}"/>
+                    </p:column>
+
+                    <p:column headerText="" style="width:40px;text-align:center;"
+                              exportFunction="#{row.getCol3()}">
+                        <h:outputText class="standardText" value="#{row.col3}"/>
+                    </p:column>
+
+                    <!--
+                    ****************************************
+                    *** FOOTER Section of the Data Table ***
+                    ****************************************
+                    -->
+                    <f:facet name="footer">
+                        <div align="center">
+                            &nbsp;
+                            <p:commandButton id="detailsButton" value="Edit Personal Details" icon="fas fa-address-card" styleClass="rounded-button"
+                                             oncomplete="PF('ResumeEditDetailsDialog').show()" update=":resumeBuilderForm,datalist"/>
+                            &nbsp;
+                            <p:commandButton id="eduButton" value="Add Education" icon="fas fa-school" styleClass="rounded-button"
+                                             oncomplete="PF('ResumeAddEducationDialog').show()" update=":resumeBuilderForm"
+                                             actionListener="#{resumeBuilderController.prepareCreate()}"/>
+                            &nbsp;
+                            <p:commandButton id="actButton" value="Add Activity" icon="fas fa-bicycle" styleClass="rounded-button"
+                                             oncomplete="PF('ResumeAddActivityDialog').show()" update=":resumeBuilderForm"
+                                             actionListener="#{resumeBuilderController.prepareCreate()}"/>
+                            &nbsp;
+                            <p:commandButton id="expButton" value="Add Job Experience" icon="fas fa-briefcase" styleClass="rounded-button"
+                                             oncomplete="PF('ResumeAddExperienceDialog').show()" update=":resumeBuilderForm"
+                                             actionListener="#{resumeBuilderController.prepareCreate()}"/>
+                            &nbsp;
+                            <p:commandButton id="deleteButton" value="Delete" icon="fas fa-trash-alt" styleClass="rounded-button"
+                                             actionListener="#{resumeBuilderController.destroy()}" update="growlInfoMessage,datalist"
+                                             disabled="#{empty resumeBuilderController.selected || resumeBuilderController.selected.isHeader()}">
+
+                                <p:confirm header="Deletion Confirmation"
+                                           message="Are you sure you want to permanently delete the selected row from the resume?" />
+                            </p:commandButton>
+                            &nbsp;
+                            <p:commandButton id="pdfButton" value="Export as PDF" icon="fas fa-file-pdf" styleClass="rounded-button" ajax="false">
+                                <!--
+                                PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                                itext-2.1.7.jar must be added to the Libraries folder.
+                                Pre-process the PDF file to be in Landscape orientation on Letter size paper.
+                                -->
+                                <p:dataExporter type="pdf" target="datalist" fileName="Resume" preProcessor="#{resumeBuilderController.preProcessPDF}"/>
+                            </p:commandButton>
+
+                            <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                <div align="center">
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                    &nbsp;
+                                    <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
+                                </div>
+                            </p:confirmDialog>
+                        </div>
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+        </div>
+        <br/>
+
+        <ui:include src="/ResumeBuilder/EditDetails.xhtml"/>
+        <ui:include src="/ResumeBuilder/AddActivities.xhtml"/>
+        <ui:include src="/ResumeBuilder/AddEducation.xhtml"/>
+        <ui:include src="/ResumeBuilder/AddExperience.xhtml"/>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

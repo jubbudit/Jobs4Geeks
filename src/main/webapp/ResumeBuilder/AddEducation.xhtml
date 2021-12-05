@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Luke Janoschka on 2021.12.05
+  - Copyright © 2021 Luke Janoschka. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!--
+    ***********************************************
+    Dialog pop-up window to EDIT (UPDATE) a company
+    ***********************************************
+    -->
+    <p:dialog id="ResumeAddEducationDlg" header="Add Education" widgetVar="ResumeAddEducationDialog"
+              modal="true" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="fade" responsive="true" >
+
+        <h:form id="ResumeBuilderAddEductionForm" class="ui-datatable-data">
+            <div align="center">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >
+
+                        <p:outputLabel value="School:" for="resumeSchool" />
+                        <p:inputText id="resumeSchool" value="#{resumeBuilderController.selected.col1}" style="width: 350px"
+                                     required="true" requiredMessage="School is required!"/>
+
+                        <p:outputLabel value="Degree:" for="resumeDegree" />
+                        <p:inputText id="resumeDegree" value="#{resumeBuilderController.selected.col2}" style="width: 350px"
+                                     required="true" requiredMessage="Degree is required!"/>
+
+                        <p:outputLabel value="GPA:" for="resumeGPA" />
+                        <p:inputText id="resumeGPA" value="#{resumeBuilderController.selected.col3}" style="width: 350px"
+                                     required="true" requiredMessage="GPA is required!"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br /><br />
+                <h:panelGroup>
+                    <!-- SAVE button -->
+                    <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
+                                     ajax="false" actionListener="#{resumeBuilderController.saveRow(1)}"
+                                     update="display,:resumeBuilderForm:datalist,:growlInfoMessage"
+                                     oncomplete="handleSubmit(args, 'ResumeAddEducationDialog');"/>
+                    &nbsp;
+                    <!-- CANCEL button -->
+                    <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
+                                     immediate="true" onclick="PF('ResumeAddEducationDialog').hide()"/>
+                    <!--
+                    With immediate="true" on the p:commandButton, the Cancel action is invoked during the
+                    JSF lifecycle phase "Apply Request Values" and all the remaining phases are skipped.
+                    -->
+                </h:panelGroup>
+                <br /><br />
+            </div>
+        </h:form>
+
+    </p:dialog>
+</ui:composition>
+</html>

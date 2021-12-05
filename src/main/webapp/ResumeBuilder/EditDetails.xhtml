@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Luke Janoschka on 2021.12.05
+  - Copyright © 2021 Luke Janoschka. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!--
+    ***********************************************
+    Dialog pop-up window to EDIT (UPDATE) a company
+    ***********************************************
+    -->
+    <p:dialog id="ResumeEditDetailsDlg" header="Edit Personal Details" widgetVar="ResumeEditDetailsDialog"
+              modal="true" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="fade" responsive="true" >
+
+        <h:form id="ResumeBuilderEditDetailsForm" class="ui-datatable-data">
+            <div align="center">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >
+
+                        <p:outputLabel value="Name:" for="resumeName" />
+                        <p:inputText id="resumeName" value="#{resumeBuilderController.nameHeader.col2}" style="width: 350px"
+                                     required="true" requiredMessage="Name is required!"/>
+
+                        <p:outputLabel value="Address:" for="resumeAddress" />
+                        <p:inputText id="resumeAddress" value="#{resumeBuilderController.detailsHeader.col1}" style="width: 350px"
+                                     required="true" requiredMessage="Address is required!"/>
+
+                        <p:outputLabel value="Phone Number:" for="resumePhone" />
+                        <p:inputText id="resumePhone" value="#{resumeBuilderController.detailsHeader.col2}" style="width: 350px"
+                                     required="true" requiredMessage="Phone Number is required!"/>
+
+                        <p:outputLabel value="Email Address:" for="resumeEmail" />
+                        <p:inputText id="resumeEmail" value="#{resumeBuilderController.detailsHeader.col3}" style="width: 350px"
+                                     required="true" requiredMessage="Email is required!"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br /><br />
+                    <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
+                                     ajax="false" actionListener="#{resumeBuilderController.updateDetails()}"
+                                     update="display,:resumeBuilderForm:datalist,:growlInfoMessage"
+                                     oncomplete="handleSubmit(args, 'ResumeEditDetailsDialog');"/>
+            </div>
+        </h:form>
+
+    </p:dialog>
+</ui:composition>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Luke Janoschka on 2021.12.05
+  - Copyright © 2021 Luke Janoschka. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!--
+    ***********************************************
+    Dialog pop-up window to EDIT (UPDATE) a company
+    ***********************************************
+    -->
+    <p:dialog id="ResumeAddActivityDlg" header="Add Activity" widgetVar="ResumeAddActivityDialog"
+              modal="true" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="fade" responsive="true" >
+
+        <h:form id="ResumeBuilderAddActivityForm" class="ui-datatable-data">
+            <div align="center">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >
+
+                        <p:outputLabel value="Activity:" for="resumeActivity" />
+                        <p:inputText id="resumeActivity" value="#{resumeBuilderController.selected.col1}" style="width: 350px"
+                                     required="true" requiredMessage="Activity is required!"/>
+
+                        <p:outputLabel value="When:" for="resumeWhen" />
+                        <p:inputText id="resumeWhen" value="#{resumeBuilderController.selected.col2}" style="width: 350px"
+                                     required="true" requiredMessage="When is required!"/>
+
+                        <p:outputLabel value="Brief Description:" for="resumeDesc" />
+                        <p:inputText id="resumeDesc" value="#{resumeBuilderController.selected.col3}" style="width: 350px"
+                                     required="true" requiredMessage="Description is required!"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br /><br />
+                <h:panelGroup>
+                    <!-- SAVE button -->
+                    <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
+                                     ajax="false" actionListener="#{resumeBuilderController.saveRow(2)}"
+                                     update="display,:resumeBuilderForm:datalist,:growlInfoMessage"
+                                     oncomplete="handleSubmit(args, 'ResumeAddActivityDialog');"/>
+                    &nbsp;
+                    <!-- CANCEL button -->
+                    <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
+                                     immediate="true" onclick="PF('ResumeAddActivityDialog').hide()"/>
+                    <!--
+                    With immediate="true" on the p:commandButton, the Cancel action is invoked during the
+                    JSF lifecycle phase "Apply Request Values" and all the remaining phases are skipped.
+                    -->
+                </h:panelGroup>
+                <br /><br />
+            </div>
+        </h:form>
+
+    </p:dialog>
+</ui:composition>
+</html>
