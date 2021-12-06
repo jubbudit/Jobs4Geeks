@@ -114,6 +114,16 @@
 
                                 <!--
                                 ===========
+                                Resume Button
+                                ===========
+                                -->
+                                <p:commandButton id="resumeButton" value="Resume" icon="fas fa-file" styleClass="rounded-button"
+                                                 action="#{userFileController.viewCandidateResume(candidateController.selected, userFileController)}"
+                                                 disabled="#{empty candidateController.selected}"/>
+                                &nbsp;
+
+                                <!--
+                                ===========
                                 Email Button
                                 ===========
                                 -->

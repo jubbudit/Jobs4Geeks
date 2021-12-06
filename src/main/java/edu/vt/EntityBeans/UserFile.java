@@ -38,7 +38,7 @@ representing the UserFile table in the CloudDriveDB database.
         , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
         , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
         , @NamedQuery(name = "UserFile.findByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
-        , @NamedQuery(name = "UserFile.findResume", query = "SELECT u FROM UserFile u WHERE u.isResume = TRUE")
+        , @NamedQuery(name = "UserFile.findResume", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId AND u.isResume = TRUE")
 })
 
 public class UserFile implements Serializable {

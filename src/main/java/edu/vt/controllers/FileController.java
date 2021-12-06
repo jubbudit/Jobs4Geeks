@@ -104,6 +104,8 @@ public class FileController implements Serializable {
             // Obtain only those files from the database that belong to the signed-in user
             listOfUserFiles = userFileFacade.findUserFilesByUserPrimaryKey(primaryKey);
 
+            System.out.println(userFileFacade.findResume(primaryKey).getFilename());
+
             // Instantiate a new hash map object
             cleanedFileNameHashMap = new HashMap<>();
 
@@ -136,7 +138,19 @@ public class FileController implements Serializable {
     ================
      */
 
-    // The constants CREATE, DELETE and UPDATE are defined in JsfUtil.java
+    public String viewCandidateResume(CandidateUser candidateUser, FileController userFileController){
+        Integer primaryKey = candidateUser.getId();
+        UserFile resume = userFileFacade.findResume(primaryKey);
+        userFileController.setSelected(resume);
+
+        //System.out.println(resume.getFilename());
+
+        cleanedFileNameHashMap = new HashMap<>();
+        cleanedFileNameHashMap.put(resume.getId(), resume.getFilename().substring(resume.getFilename().indexOf("_") + 1));
+
+        return "/CandidateAccount/Files/DisplayFile?faces-redirect=true";
+    }
+
 
     /*
     **********************
