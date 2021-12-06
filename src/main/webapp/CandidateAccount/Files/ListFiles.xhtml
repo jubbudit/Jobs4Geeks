@@ -152,7 +152,7 @@
                                 ================================
                                 -->
                                 <p:commandButton id="displayButton" value="Display File" icon="fas fa-file-alt" styleClass="rounded-button"
-                                                 action="/CandidateAccount/Files/DisplayFile?faces-redirect=true"
+                                                 action="#{userFileController.viewFileFromFileList(userFileController)}"
                                                  ajax="false" disabled="#{empty userFileController.selected}" />
                                 &nbsp;
                                 <!--

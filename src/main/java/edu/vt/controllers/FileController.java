@@ -52,6 +52,9 @@ public class FileController implements Serializable {
     // 'listOfUserFiles' is a List containing the object references of User File objects
     private List<UserFile> listOfUserFiles = null;
 
+    //keeps track of what page the view button was used from so that it can go back to that
+    String viewPage = "/CandidateAccount/Files/ListFiles?faces-redirect=true";
+
     /*
     cleanedFileNameHashMap<KEY, VALUE>
         KEY   = Integer fileId
@@ -83,11 +86,19 @@ public class FileController implements Serializable {
         this.selectedRowNumber = selectedRowNumber;
     }
 
+    public String getViewPage() {
+        return viewPage;
+    }
+
+    public void setViewPage(String viewPage) {
+        this.viewPage = viewPage;
+    }
+
     /*
-    ***************************************************************
-    Return the List of User Files that Belong to the Signed-In User
-    ***************************************************************
-     */
+        ***************************************************************
+        Return the List of User Files that Belong to the Signed-In User
+        ***************************************************************
+         */
     public List<UserFile> getListOfUserFiles() {
 
         if (listOfUserFiles == null) {
@@ -138,6 +149,11 @@ public class FileController implements Serializable {
     ================
      */
 
+    public String viewFileFromFileList(FileController fileController){
+        fileController.setViewPage("/CandidateAccount/Files/ListFiles?faces-redirect=true");
+        return "/CandidateAccount/Files/DisplayFile?faces-redirect=true";
+    }
+
     public String viewCandidateResume(CandidateUser candidateUser, FileController userFileController){
         Integer primaryKey = candidateUser.getId();
         UserFile resume = userFileFacade.findResume(primaryKey);
@@ -147,6 +163,8 @@ public class FileController implements Serializable {
 
         cleanedFileNameHashMap = new HashMap<>();
         cleanedFileNameHashMap.put(resume.getId(), resume.getFilename().substring(resume.getFilename().indexOf("_") + 1));
+
+        userFileController.setViewPage("/CandidateAccount/ListAllCandidates?faces-redirect=true");
 
         return "/CandidateAccount/Files/DisplayFile?faces-redirect=true";
     }
