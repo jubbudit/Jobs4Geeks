@@ -123,6 +123,7 @@ public class FileUploadManager implements Serializable {
                 <> user_id = user
              */
             UserFile newUserFile = new UserFile(userId_filename, user);
+            newUserFile.setResume(false);
 
             /*
             ----------------------------------------------------------------
