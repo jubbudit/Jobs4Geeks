@@ -36,16 +36,9 @@
                     *     Email TO Field      *
                     ***************************
                     -->
-                    <p:outputLabel value="To:" for="toField" />
-                    <p:inputText id="toField" value="#{emailController.emailTo}" class="emailFields"
-                                 required="true" requiredMessage="Please Enter Only One Email Address"
-                                 placeholder="Enter only one email address" size="60">
-                        <!--
-                        Execute the "validate" method of the "EmailValidator.java"
-                        class to validate only one email address entered.
-                        -->
-                        <f:validator validatorId="emailValidator" />
-                    </p:inputText>
+                    <p:outputLabel value="To: " />
+
+                    <p:outputLabel value="#{candidateController.selected.email}" />
 
                     <!--
                     ***************************
@@ -93,7 +86,7 @@
                 ================================
                 -->
                 <p:commandButton value="Send Email" icon="far fa-envelope" styleClass="rounded-button"
-                                 type="submit" ajax="false" action="#{emailController.sendEmail()}" />
+                                 type="submit" ajax="false" action="#{emailController.sendEmail(candidateController.selected.email)}" />
                 &nbsp;&nbsp;
                 <!--
                 ================================

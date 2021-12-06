@@ -128,7 +128,9 @@ public class EmailController {
     Create Email Sesion and Transport Email in HTML Format
     ======================================================
      */
-    public void sendEmail() throws AddressException, MessagingException {
+    public void sendEmail(String emailAddress) throws AddressException, MessagingException {
+
+        emailTo = emailAddress;
 
         // Obtain the email message content from the editorController object
         emailBody = editorController.getEmailMessage();
