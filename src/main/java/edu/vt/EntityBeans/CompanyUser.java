@@ -24,6 +24,7 @@ representing the CompanyUser table in the CloudDriveDB database.
         , @NamedQuery(name = "CompanyUser.findByName", query = "SELECT u FROM CompanyUser u WHERE u.name = :name")
         , @NamedQuery(name = "CompanyUser.findByUsername", query = "SELECT u FROM CompanyUser u WHERE u.username = :username")
         , @NamedQuery(name = "CompanyUser.findByPassword", query = "SELECT u FROM CompanyUser u WHERE u.password = :password")
+        , @NamedQuery(name = "CompanyUser.findByEmail", query = "SELECT u FROM CompanyUser u WHERE u.email = :email")
         , @NamedQuery(name = "CompanyUser.findBySecurityQuestionNumber", query = "SELECT u FROM CompanyUser u WHERE u.securityQuestionNumber = :securityQuestionNumber")
         , @NamedQuery(name = "CompanyUser.findBySecurityAnswer", query = "SELECT u FROM CompanyUser u WHERE u.securityAnswer = :securityAnswer")
         , @NamedQuery(name = "CompanyUser.findByDescription", query = "SELECT u FROM CompanyUser u WHERE u.description = :description")
@@ -42,6 +43,7 @@ public class CompanyUser implements Serializable {
         name VARCHAR(255) NOT NULL,
         username VARCHAR(128) NOT NULL,
         password VARCHAR(128) NOT NULL,
+        email VARCHAR(128) NOT NULL,
         security_question_number INT NOT NULL,   /* Refers to the number of the selected security question
         security_answer VARCHAR(128) NOT NULL,
         description VARCHAR(1024) NOT NULL,
@@ -84,6 +86,12 @@ public class CompanyUser implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "password")
     private String password;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "email")
+    private String email;
 
     // security_question_number INT NOT NULL
     // Refers to the number of the selected security question
@@ -129,12 +137,13 @@ public class CompanyUser implements Serializable {
     }
 
     // Not used but kept for potential future use
-    public CompanyUser(Integer id, String name, String username, String password, int securityQuestionNumber,
+    public CompanyUser(Integer id, String name, String username, String password, String email, int securityQuestionNumber,
                        String securityAnswer, String description, String homeURL) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.securityQuestionNumber = securityQuestionNumber;
         this.securityAnswer = securityAnswer;
         this.description = description;
@@ -169,6 +178,12 @@ public class CompanyUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getSecurityQuestionNumber() {

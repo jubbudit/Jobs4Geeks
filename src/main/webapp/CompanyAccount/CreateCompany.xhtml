@@ -122,6 +122,31 @@
                     </p:inputText>
 
                     <!--
+                    *****************************
+                    *       ACCOUNT EMAIL       *
+                    *****************************
+                    -->
+                    <p:outputLabel id="emailEntry" value="Email:" for="email" >
+                        &nbsp;<i class="fas fa-question-circle" />
+                        <!--
+                        When the user mouses over the icon, a tooltip is displayed
+                        to provide context-sensitive help information to the user.
+                        -->
+                        <p:tooltip for="emailEntry" value="Enter the email in which candidates can easily reach you."
+                                   showEffect="clip" hideEffect="explode" position="top" />
+                    </p:outputLabel>
+
+
+                    <p:inputText id="email" value="#{companyController.email}" required="true" class="inputTextField"
+                                 requiredMessage="The Email field is required." >
+                        <!--
+                        Execute the "validate" method in the "EmailValidator.java"
+                        class file to validate the email address entered.
+                        -->
+                        <f:validator validatorId="emailValidator" />
+                    </p:inputText>
+
+                    <!--
                     ********************************
                     *       ACCOUNT PASSWORD       *
                     ********************************

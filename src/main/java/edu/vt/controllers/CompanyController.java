@@ -40,6 +40,7 @@ public class CompanyController implements Serializable {
 
     private String name;
     private String homeURL;
+    private String email;
     private String description;
 
     private int securityQuestionNumber;
@@ -256,6 +257,10 @@ public class CompanyController implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
     /*
     ================
     Instance Methods
@@ -359,6 +364,7 @@ public class CompanyController implements Serializable {
             newUser.setSecurityAnswer(answerToSecurityQuestion);
             newUser.setDescription(description);
             newUser.setUsername(username);
+            newUser.setEmail(email);
 
             //-------------------------------------------------------------------------------------
             // Convert the user-entered String password to a String containing the following parts
@@ -414,6 +420,7 @@ public class CompanyController implements Serializable {
             editUser.setName(this.selected.getName());
             editUser.setDescription(this.selected.getDescription());
             editUser.setHomeURL(this.selected.getHomeURL());
+            editUser.setEmail(this.selected.getEmail());
 
             // Store the changes in the database
             companyUserFacade.edit(editUser);
