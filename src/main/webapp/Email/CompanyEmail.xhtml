@@ -64,7 +64,7 @@
                     <p:outputLabel value="Subject:" for="subjectField" />
                     <p:inputText id="subjectField" value="#{emailController.emailSubject}" class="emailFields"
                                  required="true" requiredMessage="Please Enter Email Subject"
-                                 placeholder="Enter email subject" size="60"/>
+                                 placeholder="To Whom It May Concern,\n My name is #{candidateController.selected.firstName} #{candidateController.selected.lastName} and I am interested in applying for a job at #{companyController.selected.name}" size="60"/>
 
                 </h:panelGrid>
                 <br />
