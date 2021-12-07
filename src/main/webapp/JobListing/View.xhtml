@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Osman Balci on 2021.6.21
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JobListingViewDlg" header="View Job Listing" widgetVar="JobListingViewDialog"
+                  modal="true" position="center" appendTo="@(body)"
+                  showEffect="slide" hideEffect="fade" responsive="true">
+
+            <h:form id="JobListingViewForm" class="ui-datatable-data">
+                <br />
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" 
+                                 rendered="#{jobListingController.selected != null}">
+
+                        <h:outputText value="Company Name:" width="100"/>
+                        <h:outputText value="#{jobListingController.selected.companyName}"/>
+
+                        <h:outputText value="Title:" width="100"/>
+                        <h:outputText value="#{jobListingController.selected.title}"/>
+
+                        <h:outputText value="Field:" width="100"/>
+                        <h:outputText value="#{jobListingController.selected.field}"/>
+
+                        <h:outputText value="Description:" width="100"/>
+                        <h:outputText value="#{jobListingController.selected.description}"/>
+
+                        <h:outputText value="Application Link:" width="100"/>
+                        <h:outputLink value="#{jobListingController.selected.applicationUrl}">#{jobListingController.selected.applicationUrl} </h:outputLink>
+
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <br />
+                    <div align="center">
+                        <!-- CLOSE button -->
+                        <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                         onclick="PF('JobListingViewDialog').hide()" />
+                    </div>
+                </h:panelGroup>
+                
+            </h:form>
+
+        </p:dialog>
+    </ui:composition>
+</html>
