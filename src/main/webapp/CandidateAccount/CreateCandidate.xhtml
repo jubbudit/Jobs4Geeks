@@ -173,6 +173,17 @@
                     <p:outputLabel value="Confirm Password:" for="confirmPassword" />
                     <p:password id="confirmPassword" value="#{candidateController.confirmPassword}"
                                 required="true" class="inputTextField"/>
+
+                    <!--
+                    ********************************
+                    *          TWO FACTOR          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Two-Factor" for="twofactor" />
+                    <p:selectBooleanCheckbox id="twofactor" value="#{candidateController.twoFactorEnabled}"
+                                required="true" label="Enable Two-Factor Authentication?"/>
+
+
                 </p:panelGrid>
                 <br />
                 <!--

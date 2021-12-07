@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Conner Owens on 2021.12.6
+  - Copyright © 2021 Conner Owens. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Verify Your Identity" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center" style="width:70%; margin:0 auto;">
+
+            <h1>Enter your Two-Factor Authentication Code:</h1>
+            <h2>An email was sent to you containing the code.</h2>
+            <br/> <br/>
+
+            <h:form>
+                <p:panelGrid columns="1" columnClasses="panelGridColumn2">
+
+                    <p:inputText id="code" value="#{candidateLoginManager.enteredCode}" class="inputTextField" placeholder="Enter Code" />
+
+                </p:panelGrid>
+
+                <br/>
+                <br/>
+                <!--
+                ================================
+                |         SIGN IN Button       |
+                ================================
+                -->
+                <p:commandButton id="login" value="Sign In" icon="fas fa-sign-in-alt" styleClass="rounded-button"
+                                 ajax="false" action="#{candidateLoginManager.verifyUser()}" />
+
+                &nbsp;
+                <!--
+                ================================
+                |         BYPASS Button        |
+                ================================
+                -->
+                <p:button action="#{candidateLoginManager.bypass()}" value="Bypass" icon="fas fa-forward"
+                          ajax="false" styleClass="ui-button-outlined" />
+            </h:form>
+
+        </div>
+        <br/><br/>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

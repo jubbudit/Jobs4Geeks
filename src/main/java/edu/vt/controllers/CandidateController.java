@@ -46,6 +46,7 @@ public class CandidateController implements Serializable {
 
     private int securityQuestionNumber;
     private String answerToSecurityQuestion;
+    private Boolean twoFactorEnabled;
 
     private Map<String, Object> security_questions;
 
@@ -181,6 +182,13 @@ public class CandidateController implements Serializable {
         return candidateUserFacade.findAll();
     }
 
+    public Boolean getTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(Boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
+    }
     /*
     ================
     Instance Methods
@@ -274,6 +282,7 @@ public class CandidateController implements Serializable {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setCurrentPosition(currentPosition);
+            newUser.setTwoFactorEnabled(twoFactorEnabled);
 
             //-------------------------------------------------------------------------------------
             // Convert the user-entered String password to a String containing the following parts
@@ -330,6 +339,7 @@ public class CandidateController implements Serializable {
             editUser.setLastName(this.selected.getLastName());
             editUser.setCurrentPosition(this.selected.getCurrentPosition());
             editUser.setEmail(this.selected.getEmail());
+            editUser.setTwoFactorEnabled(this.selected.isTwoFactorEnabled());
 
             // Store the changes in the database
             candidateUserFacade.edit(editUser);

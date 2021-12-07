@@ -47,6 +47,7 @@ public class CandidateUser implements Serializable {
         security_answer VARCHAR(128) NOT NULL,
         current_position VARCHAR(128) NOT NULL,
         email VARCHAR(255) NOT NULL,
+        twoFactorEnabled BOOLEAN NOT NULL,
         PRIMARY KEY (id)
     );
     ========================================================
@@ -121,6 +122,12 @@ public class CandidateUser implements Serializable {
     @Column(name = "current_position")
     private String currentPosition;
 
+    // twoFactorEnabled BOOLEAN NOT NULL,
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "two_factor_enabled")
+    private Boolean twoFactorEnabled;
+
     /*
     ===============================================================
     Class constructors for instantiating a CandidateUser entity object to
@@ -139,7 +146,7 @@ public class CandidateUser implements Serializable {
 
     // Not used but kept for potential future use
     public CandidateUser(Integer id, String username, String password, String firstName, String lastName,
-                         int securityQuestionNumber, String securityAnswer, String currentPosition, String email) {
+                         int securityQuestionNumber, String securityAnswer, String currentPosition, String email, Boolean twoFactorEnabled) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -149,6 +156,7 @@ public class CandidateUser implements Serializable {
         this.securityAnswer = securityAnswer;
         this.currentPosition = currentPosition;
         this.email = email;
+        this.twoFactorEnabled = twoFactorEnabled;
     }
 
     /*
@@ -228,6 +236,11 @@ public class CandidateUser implements Serializable {
     public void setCurrentPosition(String currentPosition) {
         this.currentPosition = currentPosition;
     }
+
+    public void setTwoFactorEnabled(Boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
+    }
+
     /*
     ================================
     Instance Methods Used Internally
@@ -260,6 +273,11 @@ public class CandidateUser implements Serializable {
     @Override
     public String toString() {
         return id.toString();
+    }
+
+    // Returns a true or false is the user has two-factor authentication enabled
+    public Boolean isTwoFactorEnabled() {
+        return twoFactorEnabled;
     }
 
 }
