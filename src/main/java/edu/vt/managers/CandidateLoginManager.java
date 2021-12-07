@@ -264,7 +264,7 @@ public class CandidateLoginManager implements Serializable {
             For the Gmail's SMTP server to accept the unsecure connection, the
             Cloud.Software.Email@gmail.com account's "Allow less secure apps" option is set to ON.
              */
-            transport.connect("smtp.gmail.com", "coltraxjon@gmail.com", "kfomnkmfigqldclj");
+            transport.connect("smtp.gmail.com", "Jobs4Geeks2021@gmail.com", "mlfeahmbpijxogsc");
 
             // Send the htmlEmailMessage created to the specified list of addresses (recipients)
             transport.sendMessage(htmlEmailMessage, htmlEmailMessage.getAllRecipients());
