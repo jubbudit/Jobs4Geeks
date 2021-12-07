@@ -23,7 +23,7 @@
         <div align="center" style="width:70%; margin:0 auto;">
 
             <h1>Enter your Two-Factor Authentication Code:</h1>
-            <h2>An email was sent to you containing the code.</h2>
+            <h2>An email was sent to you containing the code. Enter "000000" to bypass.</h2>
             <br/> <br/>
 
             <h:form>
@@ -43,14 +43,6 @@
                 <p:commandButton id="login" value="Sign In" icon="fas fa-sign-in-alt" styleClass="rounded-button"
                                  ajax="false" action="#{companyLoginManager.verifyUser()}" />
 
-                &nbsp;
-                <!--
-                ================================
-                |         BYPASS Button        |
-                ================================
-                -->
-                <p:button action="#{companyLoginManager.bypass()}" value="Bypass" icon="fas fa-forward"
-                          ajax="false" styleClass="ui-button-outlined" />
             </h:form>
 
         </div>
