@@ -72,7 +72,7 @@
                     </p:outputLabel>
 
 
-                    <p:inputText id="email" value="#{companyController.email}" required="true" class="inputTextField"
+                    <p:inputText id="email" value="#{companyController.selected.email}" required="true" class="inputTextField"
                                  requiredMessage="The Email field is required." >
                         <!--
                         Execute the "validate" method in the "EmailValidator.java"
@@ -91,6 +91,15 @@
                                  requiredMessage="The Description field is required." >
                         <f:validateLength minimum="2" />
                     </p:inputText>
+
+                    <!--
+                    ********************************
+                    *          TWO FACTOR          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Enable Two-Factor?" for="twofactor" />
+                    <p:selectBooleanCheckbox id="twofactor" value="#{companyController.selected.twoFactorEnabled}" required="true" />
+
                 </p:panelGrid>
                 <br />
                 <!--

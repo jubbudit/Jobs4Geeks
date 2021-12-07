@@ -45,6 +45,7 @@ public class CompanyController implements Serializable {
 
     private int securityQuestionNumber;
     private String answerToSecurityQuestion;
+    private Boolean twoFactorEnabled;
 
     private Map<String, Object> security_questions;
 
@@ -126,12 +127,20 @@ public class CompanyController implements Serializable {
         return security_questions;
     }
 
+    public Boolean getTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(Boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
+    }
+
     /*
-    ****************************************
-    Return the Security Question Selected by
-    the CompanyUser at the Time of Account Creation
-    ****************************************
-     */
+        ****************************************
+        Return the Security Question Selected by
+        the CompanyUser at the Time of Account Creation
+        ****************************************
+         */
     public String getSelectedSecurityQuestion() {
         /*
         'user', the object reference of the signed-in user, was put into the SessionMap
@@ -365,6 +374,7 @@ public class CompanyController implements Serializable {
             newUser.setDescription(description);
             newUser.setUsername(username);
             newUser.setEmail(email);
+            newUser.setTwoFactorEnabled(twoFactorEnabled);
 
             //-------------------------------------------------------------------------------------
             // Convert the user-entered String password to a String containing the following parts
@@ -421,6 +431,7 @@ public class CompanyController implements Serializable {
             editUser.setDescription(this.selected.getDescription());
             editUser.setHomeURL(this.selected.getHomeURL());
             editUser.setEmail(this.selected.getEmail());
+            editUser.setTwoFactorEnabled(this.selected.isTwoFactorEnabled());
 
             // Store the changes in the database
             companyUserFacade.edit(editUser);

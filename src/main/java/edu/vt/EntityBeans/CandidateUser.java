@@ -241,6 +241,10 @@ public class CandidateUser implements Serializable {
         this.twoFactorEnabled = twoFactorEnabled;
     }
 
+    public Boolean getTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
     /*
     ================================
     Instance Methods Used Internally

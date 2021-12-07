@@ -6,7 +6,6 @@ package edu.vt.managers;
 
 import edu.vt.EntityBeans.CandidateUser;
 import edu.vt.FacadeBeans.CandidateUserFacade;
-import edu.vt.controllers.EmailController;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
 

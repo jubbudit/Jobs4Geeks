@@ -83,6 +83,14 @@
                         <f:validator validatorId="emailValidator" />
                     </p:inputText>
 
+                    <!--
+                    ********************************
+                    *          TWO FACTOR          *
+                    ********************************
+                    -->
+                    <p:outputLabel value="Enable Two-Factor?" for="twofactor" />
+                    <p:selectBooleanCheckbox id="twofactor" value="#{candidateController.selected.twoFactorEnabled}" required="true"/>
+
                 </p:panelGrid>
                 <br />
                 <!--

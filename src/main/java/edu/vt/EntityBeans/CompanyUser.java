@@ -48,6 +48,7 @@ public class CompanyUser implements Serializable {
         security_answer VARCHAR(128) NOT NULL,
         description VARCHAR(1024) NOT NULL,
         home_url VARCHAR(255) NOT NULL,		/* URL of the company home page
+        two_factor_enabled BOOLEAN NOT NULL,
         PRIMARY KEY (id)
     );
     ========================================================
@@ -121,6 +122,12 @@ public class CompanyUser implements Serializable {
     @Column(name = "home_url")
     private String homeURL;
 
+    // two_factor_enabled BOOLEAN NOT NULL,
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "two_factor_enabled")
+    private Boolean twoFactorEnabled;
+
     /*
     ===============================================================
     Class constructors for instantiating a CompanyUser entity object to
@@ -138,7 +145,7 @@ public class CompanyUser implements Serializable {
 
     // Not used but kept for potential future use
     public CompanyUser(Integer id, String name, String username, String password, String email, int securityQuestionNumber,
-                       String securityAnswer, String description, String homeURL) {
+                       String securityAnswer, String description, String homeURL, Boolean twoFactorEnabled) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -148,6 +155,7 @@ public class CompanyUser implements Serializable {
         this.securityAnswer = securityAnswer;
         this.description = description;
         this.homeURL = homeURL;
+        this.twoFactorEnabled = twoFactorEnabled;
     }
 
     /*
@@ -226,6 +234,17 @@ public class CompanyUser implements Serializable {
         this.homeURL = homeURL;
     }
 
+    public Boolean isTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public Boolean getTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(Boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
+    }
     /*
     ================================
     Instance Methods Used Internally

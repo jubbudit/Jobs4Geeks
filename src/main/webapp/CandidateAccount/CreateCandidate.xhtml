@@ -179,9 +179,8 @@
                     *          TWO FACTOR          *
                     ********************************
                     -->
-                    <p:outputLabel value="Two-Factor" for="twofactor" />
-                    <p:selectBooleanCheckbox id="twofactor" value="#{candidateController.twoFactorEnabled}"
-                                required="true" label="Enable Two-Factor Authentication?"/>
+                    <p:outputLabel value="Enable Two-Factor?" for="twofactor" />
+                    <p:selectBooleanCheckbox id="twofactor" value="#{candidateController.twoFactorEnabled}" required="true" />
 
 
                 </p:panelGrid>
