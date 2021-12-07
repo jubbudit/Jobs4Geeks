@@ -64,7 +64,7 @@
                     <p:outputLabel value="Subject:" for="subjectField" />
                     <p:inputText id="subjectField" value="#{emailController.emailSubject}" class="emailFields"
                                  required="true" requiredMessage="Please Enter Email Subject"
-                                 placeholder="To Whom It May Concern,\n My name is #{candidateController.selected.firstName} #{candidateController.selected.lastName} and I am interested in applying for a job at #{companyController.selected.name}" size="60"/>
+                                 placeholder="Please Enter Email Subject" size="60"/>
 
                 </h:panelGrid>
                 <br />
@@ -78,7 +78,7 @@
                 entire email message content as a String of characters.
                 -->
                 <p:textEditor id="editor" secure='false' value="#{editorController.emailMessage}" height="360"
-                              placeholder="Enter your email content here" />
+                              placeholder="To Whom It May Concern, My name is #{candidateController.selected.firstName} #{candidateController.selected.lastName} and I am interested in applying for a job at #{companyController.selected.name}. Respectfully," />
                 <br />
                 <!--
                 ================================
