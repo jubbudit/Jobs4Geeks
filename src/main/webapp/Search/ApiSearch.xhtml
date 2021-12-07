@@ -40,13 +40,13 @@
                         <f:selectItem itemValue="1" itemLabel="Full time"/>
                         <f:selectItem itemValue="0" itemLabel="Part time"/>
                     </p:selectOneButton>
-                    <h:outputLabel value="Contract: " for="permanent"/>
+                    <h:outputLabel value="Contract work?: " for="permanent"/>
                     <p:selectOneButton value="#{apiController.contract}" id="permanent">
                         <f:selectItem itemValue="1" itemLabel="Contract"/>
                         <f:selectItem itemValue="0" itemLabel="Permanent"/>
                     </p:selectOneButton>
                 </h:panelGrid>
-                <h3>*Required</h3>
+                <p style="color: dimgrey; font-style: italic;">*Required</p>
 
                 <h:panelGroup>
                     <br /><br />
@@ -57,7 +57,9 @@
 
                         <!-- CLEAR button -->
                         <p:commandButton value="Clear" icon="fas fa-undo" styleClass="ui-button-outlined"
-                                         ajax="false" action="#{apiController.clearSearch()}" />
+                                         ajax="false" action="#{apiController.clearSearch()}"
+                                         update="display,:growlInfoMessage"
+                                         oncomplete="handleSubmit(args, 'ApiSearchDialog');"/>
 
                         <!-- CANCEL button -->
                         <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"

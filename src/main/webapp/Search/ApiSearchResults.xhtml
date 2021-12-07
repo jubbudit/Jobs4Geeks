@@ -131,7 +131,7 @@
                             <td><a href="#{apiController.selected.appUrl}"><h:outputText value="#{apiController.selected.appUrl}"/></a></td>
                         </tr>
                     </table><br/>
-                    <p:commandButton styleClass="rounded-button" value="Add to Favorites"/>
+                    <p:commandButton styleClass="rounded-button" value="Add to Listings" actionListener="#{apiController.saveJob()}"/>
                 </div>
             </h:form>
             <style type="text/css">

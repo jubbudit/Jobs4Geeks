@@ -4,11 +4,14 @@ package edu.vt.controllers;
  * Copyright © 2021 Luke Janoschka. All rights reserved.
  */
 
+import edu.vt.EntityBeans.JobListing;
+import edu.vt.FacadeBeans.JobListingFacade;
 import edu.vt.globals.Methods;
 import edu.vt.pojo.ApiJob;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -17,6 +20,9 @@ import java.util.ArrayList;
 @Named("apiController")
 @SessionScoped
 public class ApiController implements Serializable {
+
+    @EJB
+    private JobListingFacade jobListingFacade;
 
     private String searchString;
     private Integer minSalary;
@@ -192,6 +198,17 @@ public class ApiController implements Serializable {
             return "/Search/ApiSearchResults.xhtml?faces-redirect=true";
         }
         return "/Search/ApiSearchResults.xhtml?faces-redirect=true";
+
+
+    }
+
+    public void saveJob() {
+        //String companyName, String title, String description, String field, String applicationUrl
+        JobListing job = new JobListing(selected.getCompanyName(), selected.getTitle(),
+                    selected.getDescription(), selected.getField(), selected.getAppUrl());
+        jobListingFacade.create(job);
+
+        Methods.showMessage("Information", "Successfully added job to listings", "");
 
 
     }
