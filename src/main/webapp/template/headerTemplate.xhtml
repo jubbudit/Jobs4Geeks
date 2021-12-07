@@ -90,6 +90,7 @@ siteTemplate for the entire site, achieving great maintainability.
                                     <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{candidateController.userPhoto()}" />
                                     &nbsp;My Account
                                 </p:menuitem>
+                                <p:menuitem value="List of Jobs" outcome="/JobListing/List" icon="fas fa-list" />
                                 <p:menuitem value="List of Companies" outcome="/CompanyAccount/ListAllCompanies" icon="fas fa-list" />
                                 <p:menuitem value="Sign Out" action="#{candidateController.logout()}" icon="fas fa-sign-out-alt" />
                             </c:if>
@@ -100,13 +101,14 @@ siteTemplate for the entire site, achieving great maintainability.
                                     <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{companyController.userPhoto()}" />
                                     &nbsp;My Account
                                 </p:menuitem>
+                                <p:menuitem value="List of Jobs" outcome="/JobListing/List" icon="fas fa-list" />
                                 <p:menuitem value="List of Candidates" outcome="/CandidateAccount/ListAllCandidates" icon="fas fa-list" />
                                 <p:menuitem value="Sign Out" action="#{companyController.logout()}" icon="fas fa-sign-out-alt" />
                             </c:if>
 
+                            <p:menuitem value="Resume Builder" outcome="/ResumeBuilder/ResumeBuilder" icon="fas fa-address-card"/>
                             <p:menuitem value="Search API" onclick="PF('ApiSearchDialog').show();return false;" icon="fas fa-search" />
                             <p:menuitem value="About" outcome="/About" icon="fas fa-info-circle"/>
-                            <p:menuitem value="Resume Builder" outcome="/ResumeBuilder/ResumeBuilder" icon="fas fa-address-card"/>
                         </p:menu>
                     </div>
                 </td>
