@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Entity
 
 // Name of the database table represented
-@Table(name = "joblisting")
+@Table(name = "JobListing")
 
 
 public class JobListing implements Serializable {

@@ -43,9 +43,6 @@ public class JobListingController implements Serializable {
     @EJB
     private JobListingFacade jobListingFacade;
 
-    //@EJB
-    //private CompanyController companyController;
-
 
 
     public List<JobListing> getListOfJobListings() {
@@ -174,33 +171,14 @@ public class JobListingController implements Serializable {
         }
     }
 
-    public String search(Integer type) {
-        // Set search type given as input parameter
-        searchType = type;
-
-        // Unselect previously selected country if any before showing the search results
-        selected = null;
-
-        // Invalidate list of search items to trigger re-query.
-        searchItems = null;
-
-        return "/databaseSearch/DatabaseSearchResults?faces-redirect=true";
-    }
-
     public boolean isMyListing() {
-            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            try {
-                CompanyUser signedInUser = (CompanyUser) sessionMap.get("user");
-                if (signedInUser == null) {
-                    return false;
-                }
-                if (Objects.equals(selected.getCompanyId().getId(), signedInUser.getId())) {
-                    return true;
-                }
-                return false;
-            } catch (Exception e) {
-                return false;
-            }
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object user = sessionMap.get("user");
+        if (user instanceof CompanyUser) {
+            CompanyUser signedInUser = (CompanyUser) user;
+            return Objects.equals(selected.getCompanyId(), signedInUser);
+        }
+        return false;
     }
 
 
