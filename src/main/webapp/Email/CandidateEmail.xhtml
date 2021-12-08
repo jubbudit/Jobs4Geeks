@@ -86,7 +86,7 @@
                 ================================
                 -->
                 <p:commandButton value="Send Email" icon="far fa-envelope" styleClass="rounded-button"
-                                 type="submit" ajax="false" action="#{emailController.sendEmail(candidateController.selected.email)}" />
+                                 type="submit" ajax="false" action="#{emailController.sendEmailToCandidate(candidateController.selected.email, candidateController.selected.firstName)}" />
                 &nbsp;&nbsp;
                 <!--
                 ================================
@@ -131,6 +131,10 @@
 
                     <p:resetInput target="EmailCompositionForm" />
                 </p:commandButton>
+                &nbsp;&nbsp;
+
+                <!-- Go Back Button -->
+                <p:button value="Back" outcome="/CandidateAccount/ListAllCandidates.xhtml" icon="far fa-arrow-alt-circle-left" styleClass="rounded-button" />
             </div>
             <br/><br/>
         </h:form>
