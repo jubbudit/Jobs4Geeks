@@ -4,6 +4,7 @@
  */
 package edu.vt.controllers;
 
+import edu.vt.EntityBeans.CompanyUser;
 import edu.vt.EntityBeans.JobListing;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
@@ -13,10 +14,13 @@ import edu.vt.FacadeBeans.JobListingFacade;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 
@@ -38,6 +42,9 @@ public class JobListingController implements Serializable {
 
     @EJB
     private JobListingFacade jobListingFacade;
+
+    //@EJB
+    //private CompanyController companyController;
 
 
 
@@ -89,7 +96,11 @@ public class JobListingController implements Serializable {
     }
 
     public void prepareCreate() {
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        CompanyUser signedInUser = (CompanyUser) sessionMap.get("user");
         selected = new JobListing();
+        selected.setCompanyId(signedInUser);
+        selected.setCompanyName(signedInUser.getName());
     }
 
 
@@ -174,6 +185,22 @@ public class JobListingController implements Serializable {
         searchItems = null;
 
         return "/databaseSearch/DatabaseSearchResults?faces-redirect=true";
+    }
+
+    public boolean isMyListing() {
+            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+            try {
+                CompanyUser signedInUser = (CompanyUser) sessionMap.get("user");
+                if (signedInUser == null) {
+                    return false;
+                }
+                if (Objects.equals(selected.getCompanyId().getId(), signedInUser.getId())) {
+                    return true;
+                }
+                return false;
+            } catch (Exception e) {
+                return false;
+            }
     }
 
 

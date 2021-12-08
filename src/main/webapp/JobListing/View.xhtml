@@ -10,48 +10,65 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="JobListingViewDlg" header="View Job Listing" widgetVar="JobListingViewDialog"
-                  modal="true" position="center" appendTo="@(body)"
-                  showEffect="slide" hideEffect="fade" responsive="true">
+    <p:dialog id="JobListingViewDlg" header="View Job Listing" widgetVar="JobListingViewDialog"
+              modal="true" position="center" appendTo="@(body)"  width="50%" height="400px"
+              showEffect="slide" hideEffect="fade" responsive="true">
 
-            <h:form id="JobListingViewForm" class="ui-datatable-data">
+        <h:form id="JobListingViewForm" class="ui-datatable-data">
+            <br />
+
+            <div align="center">
+                <h1><h:outputText value="#{jobListingController.selected.title}"/></h1>
+
+                <table style="text-align: left; border: black 3px solid;">
+                    <tr class="table-title">
+                        <td>Description: </td>
+                    </tr>
+                    <tr class="table-content">
+                        <td><h:outputText value="#{jobListingController.selected.description}"/></td>
+                    </tr>
+                    <tr class="table-title">
+                        <td>Company: </td>
+                    </tr>
+                    <tr class="table-content">
+                        <td><h:outputText value="#{jobListingController.selected.companyName}"/></td>
+                    </tr>
+                    <tr class="table-title">
+                        <td>Field: </td>
+                    </tr>
+                    <tr class="table-content">
+                        <td><h:outputText value="#{jobListingController.selected.field}"/></td>
+                    </tr>
+                    <tr class="table-title">
+                        <td>Application Link: </td>
+                    </tr>
+                    <tr class="table-content">
+                        <td><a href="#{jobListingController.selected.applicationUrl}"><h:outputText value="#{jobListingController.selected.applicationUrl}"/></a></td>
+                    </tr>
+                </table><br/>
+            </div>
+            <style type="text/css">
+                .table-title {
+                    font-weight: bold;
+                }
+                .table-content {
+                    color: dimgrey;
+                }
+            </style>
+
+            <h:panelGroup>
                 <br />
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" 
-                                 rendered="#{jobListingController.selected != null}">
+                <div align="center">
+                    <!-- CLOSE button -->
+                    <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                     onclick="PF('JobListingViewDialog').hide()" />
+                </div>
+            </h:panelGroup>
 
-                        <h:outputText value="Company Name:" width="100"/>
-                        <h:outputText value="#{jobListingController.selected.companyName}"/>
+        </h:form>
 
-                        <h:outputText value="Title:" width="100"/>
-                        <h:outputText value="#{jobListingController.selected.title}"/>
-
-                        <h:outputText value="Field:" width="100"/>
-                        <h:outputText value="#{jobListingController.selected.field}"/>
-
-                        <h:outputText value="Description:" width="100"/>
-                        <h:outputText value="#{jobListingController.selected.description}"/>
-
-                        <h:outputText value="Application Link:" width="100"/>
-                        <h:outputLink value="#{jobListingController.selected.applicationUrl}">#{jobListingController.selected.applicationUrl} </h:outputLink>
-
-
-                    </p:panelGrid>
-                </h:panelGroup>
-                
-                <h:panelGroup>
-                    <br />
-                    <div align="center">
-                        <!-- CLOSE button -->
-                        <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
-                                         onclick="PF('JobListingViewDialog').hide()" />
-                    </div>
-                </h:panelGroup>
-                
-            </h:form>
-
-        </p:dialog>
-    </ui:composition>
+    </p:dialog>
+</ui:composition>
 </html>

@@ -20,10 +20,6 @@
                 <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
                              rendered="#{jobListingController.selected != null}">
 
-                    <p:outputLabel value="Company Name:" for="companyName" />
-                    <p:inputText id="companyName" value="#{jobListingController.selected.companyName}" style="width:400px"
-                                 required="true" requiredMessage="Company Name is required!"/>
-
                     <p:outputLabel value="Title:" for="title" />
                     <p:inputText id="title" value="#{jobListingController.selected.title}" style="width:400px"
                                  required="true" requiredMessage="Job Listing Title is required!"/>

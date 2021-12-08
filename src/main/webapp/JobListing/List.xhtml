@@ -48,8 +48,11 @@
                                  rowsPerPageTemplate="5,10,15,20,30,40,50"
                                  emptyMessage="No job listing found for the search query entered!" >
 
+
+
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
 
                         <!--
                         *************************
@@ -67,10 +70,10 @@
                             </div>
                         </f:facet>
 
-                        <p:column headerText="Company Name" sortBy="#{aJob.title}"
-                                  filterBy="#{aJob.title}" filterMatchMode="contains"
+                        <p:column headerText="Company Name" sortBy="#{aJob.companyName}"
+                                  filterBy="#{aJob.companyName}" filterMatchMode="contains"
                                   style="vertical-align: top; width:150px">
-                            <h:outputText value="#{aJob.title}"/>
+                            <h:outputText value="#{aJob.companyName}"/>
                         </p:column>
 
                         <p:column headerText="Title" sortBy="#{aJob.title}"
@@ -110,8 +113,10 @@
                         <f:facet name="footer">
                             <div align="center">
 
+
                                 <p:commandButton id="createButton" value="Create" icon="fas fa-plus" styleClass="rounded-button"
                                                  actionListener="#{jobListingController.prepareCreate()}"
+                                                 disabled="#{companyController.loggedIn == false}"
                                                  update=":JobListingCreateForm" oncomplete="PF('JobListingCreateDialog').show()"/>
                                 &nbsp;
                                 <p:commandButton id="viewButton" value="View" icon="fas fa-eye" styleClass="rounded-button"
@@ -120,12 +125,12 @@
                                 &nbsp;
                                 <p:commandButton id="editButton" value="Edit" icon="fas fa-edit" styleClass="rounded-button"
                                                  update=":JobListingEditForm" oncomplete="PF('JobListingEditDialog').show()"
-                                                 disabled="#{empty jobListingController.selected}"/>
+                                                 disabled="#{empty jobListingController.selected || jobListingController.isMyListing() == false}"/>
                                 &nbsp;
                                 <p:commandButton id="deleteButton" value="Delete" icon="fas fa-trash-alt" styleClass="rounded-button"
                                                  actionListener="#{jobListingController.destroy}"
                                                  update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                                                 disabled="#{empty jobListingController.selected}">
+                                                 disabled="#{empty jobListingController.selected || jobListingController.isMyListing() == false}">
 
                                     <p:confirm header="Deletion Confirmation"
                                                message="Are you sure you want to permanently delete the selected job listing #{jobListingController.selected.title} from the database?" />

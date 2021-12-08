@@ -5,15 +5,7 @@
 package edu.vt.EntityBeans;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,11 +32,9 @@ public class JobListing implements Serializable {
     @Column(name = "company_name")
     private String companyName;
 
-    //@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "company_id")
-    private Integer companyId;
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    @ManyToOne
+    private CompanyUser companyId;
 
     @Basic(optional = false)
     @NotNull
@@ -79,13 +69,21 @@ public class JobListing implements Serializable {
         this.id = id;
     }
 
-    public JobListing(Integer id, String title, String description, Integer companyId, String field, String companyName, String applicationUrl) {
+    public JobListing(Integer id, String title, String description, CompanyUser companyId, String field, String companyName, String applicationUrl) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.companyId = companyId;
         this.field = field;
         this.companyName = companyName;
+        this.applicationUrl = applicationUrl;
+    }
+
+    public JobListing(String companyName, String title, String description, String field, String applicationUrl) {
+        this.companyName = companyName;
+        this.title = title;
+        this.description = description;
+        this.field = field;
         this.applicationUrl = applicationUrl;
     }
 
@@ -97,11 +95,11 @@ public class JobListing implements Serializable {
         this.id = id;
     }
 
-    public Integer getCompanyId() {
+    public CompanyUser getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(Integer companyId) {
+    public void setCompanyId(CompanyUser companyId) {
         this.companyId = companyId;
     }
 
