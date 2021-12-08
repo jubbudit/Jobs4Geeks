@@ -43,9 +43,6 @@ public class JobListingController implements Serializable {
     @EJB
     private JobListingFacade jobListingFacade;
 
-    //@EJB
-    //private CompanyController companyController;
-
 
 
     public List<JobListing> getListOfJobListings() {
@@ -188,19 +185,13 @@ public class JobListingController implements Serializable {
     }
 
     public boolean isMyListing() {
-            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            try {
-                CompanyUser signedInUser = (CompanyUser) sessionMap.get("user");
-                if (signedInUser == null) {
-                    return false;
-                }
-                if (Objects.equals(selected.getCompanyId().getId(), signedInUser.getId())) {
-                    return true;
-                }
-                return false;
-            } catch (Exception e) {
-                return false;
-            }
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object user = sessionMap.get("user");
+        if (user instanceof CompanyUser) {
+            CompanyUser signedInUser = (CompanyUser) user;
+            return Objects.equals(selected.getCompanyId(), signedInUser);
+        }
+        return false;
     }
 
 

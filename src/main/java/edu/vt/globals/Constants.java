@@ -23,18 +23,22 @@ public final class Constants {
     //-------------------------
     // To run locally (Windows)
     //-------------------------
-    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage/";
-    public static final String USER_PHOTOS_URI = "http://localhost:8080/candidatephotos/";
-    public static final String USER_FILES_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidateFileStorage/";
-    public static final String USER_FILES_URI = "http://localhost:8080/candidatefiles/";
-    public static final String COMPANY_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CompanyPhotoStorage/";
-    public static final String COMPANY_PHOTOS_URI = "http://localhost:8080/companyphotos/";
+    //public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage/";
+    //public static final String USER_PHOTOS_URI = "http://localhost:8080/candidatephotos/";
+    //public static final String USER_FILES_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CandidateFileStorage/";
+    //public static final String USER_FILES_URI = "http://localhost:8080/candidatefiles/";
+    //public static final String COMPANY_PHOTOS_ABSOLUTE_PATH = "C:/Users/conne/DocRoot/Jobs4GeeksStorage/CompanyPhotoStorage/";
+    //public static final String COMPANY_PHOTOS_URI = "http://localhost:8080/companyphotos/";
 
     //--------------------------------
     // To run on your AWS EC2 instance
     //--------------------------------
-    //    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/SurveyUserPhotoStorage/";
-    //    public static final String PHOTOS_URI = "http://54.84.71.63:8080/userphotos/";
+    public static final String USER_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Jobs4GeeksStorage/CandidatePhotoStorage";
+    public static final String USER_PHOTOS_URI = "http://54.163.214.105:8080/candidatephotos/";
+    public static final String USER_FILES_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Jobs4GeeksStorage/CandidateFileStorage";
+    public static final String USER_FILES_URI = "http://54.163.214.105:8080/candidatefiles/";
+    public static final String COMPANY_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Jobs4GeeksStorage/CompanyPhotoStorage";
+    public static final String COMPANY_PHOTOS_URI = "http://54.163.214.105:8080/companyphotos/";
 
     /*
      A security question is selected and answered by the user at the time of account creation.
