@@ -80,10 +80,26 @@
             <br/> <br/>
 
             <div align="center">
+
+                <!-- ====== Show "My Account" if a user is logged in ====== -->
+                <c:if test="#{candidateController.isLoggedIn() == true}">
+                    <p:button outcome="/CandidateAccount/CandidateProfile" value="My Account"
+                              icon="fas fa-user-tie" styleClass="rounded-button" />
+                </c:if>
+
+                <c:if test="#{companyController.isLoggedIn() == true}">
+                    <p:button outcome="/CompanyAccount/CompanyProfile" value="My Account"
+                              icon="fas fa-user-tie" styleClass="rounded-button" />
+                </c:if>
+
+
                 <!-- ====== Show "Sign In" if no user is logged in ====== -->
-                <!-- TODO -->
-                <p:button outcome="/CandidateAccount/CandidateSignIn" value="Sign In"
-                          icon="fas fa-sign-in-alt" styleClass="rounded-button"  />
+                <c:if test="#{candidateController.isLoggedIn() == false}">
+                    <c:if test="#{companyController.isLoggedIn() == false}">
+                        <p:button outcome="/CandidateAccount/CandidateSignIn" value="Sign In"
+                                  icon="fas fa-sign-in-alt" styleClass="rounded-button" />
+                    </c:if>
+                </c:if>
 
             </div>
 
