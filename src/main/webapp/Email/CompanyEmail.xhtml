@@ -78,7 +78,7 @@
                 entire email message content as a String of characters.
                 -->
                 <p:textEditor id="editor" secure='false' value="#{editorController.emailMessage}" height="360"
-                              placeholder="To Whom It May Concern, My name is #{candidateController.selected.firstName} #{candidateController.selected.lastName} and I am interested in applying for a job at #{companyController.selected.name}. Respectfully," />
+                              placeholder="Enter email body here." />
                 <br />
                 <!--
                 ================================
@@ -86,7 +86,7 @@
                 ================================
                 -->
                 <p:commandButton value="Send Email" icon="far fa-envelope" styleClass="rounded-button"
-                                 type="submit" ajax="false" action="#{emailController.sendEmail(companyController.selected.email)}" />
+                                 type="submit" ajax="false" action="#{emailController.sendEmailToCompany(companyController.selected.email, companyController.selected.name)}" />
                 &nbsp;&nbsp;
                 <!--
                 ================================

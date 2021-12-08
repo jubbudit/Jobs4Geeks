@@ -86,7 +86,7 @@
                 ================================
                 -->
                 <p:commandButton value="Send Email" icon="far fa-envelope" styleClass="rounded-button"
-                                 type="submit" ajax="false" action="#{emailController.sendEmail(candidateController.selected.email)}" />
+                                 type="submit" ajax="false" action="#{emailController.sendEmailToCandidate(candidateController.selected.email, candidateController.selected.firstName)}" />
                 &nbsp;&nbsp;
                 <!--
                 ================================
