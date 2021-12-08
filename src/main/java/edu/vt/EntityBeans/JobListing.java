@@ -54,7 +54,7 @@ public class JobListing implements Serializable {
     @Column(name = "field")
     private String field;
 
-    @Basic(optional = false)
+    @Basic(optional = true)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "application_url")
