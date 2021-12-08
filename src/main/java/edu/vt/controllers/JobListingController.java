@@ -171,19 +171,6 @@ public class JobListingController implements Serializable {
         }
     }
 
-    public String search(Integer type) {
-        // Set search type given as input parameter
-        searchType = type;
-
-        // Unselect previously selected country if any before showing the search results
-        selected = null;
-
-        // Invalidate list of search items to trigger re-query.
-        searchItems = null;
-
-        return "/databaseSearch/DatabaseSearchResults?faces-redirect=true";
-    }
-
     public boolean isMyListing() {
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         Object user = sessionMap.get("user");
