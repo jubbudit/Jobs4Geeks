@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2021.7.17
- * Copyright © 2021 Osman Balci. All rights reserved.
+ * Created by Ethan Xie on 2021.12.7
+ * Copyright © 2021 Ethan Xie. All rights reserved.
  */
 package edu.vt.EntityBeans;
 
